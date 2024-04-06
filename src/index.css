@@ -6,3 +6,8 @@
 body {
   font-size: 10px;
 }
+
+main {
+  display: flex;
+  justify-content: center;
+}

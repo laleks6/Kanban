@@ -1,5 +1,4 @@
 import ToDoSimple from "./ToDoSimple/ToDoSimple";
-import ToDoContext from "./context/Context";
 
 function Main() {
   return (
