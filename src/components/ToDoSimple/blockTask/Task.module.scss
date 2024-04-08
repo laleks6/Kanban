@@ -1,13 +1,32 @@
+$small: 600px;
 .taskBlock {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
+  gap: 10px;
+  padding: 20px;
+  min-width: 300px;
+  background-color: white;
 }
 .task {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  font-size: 2rem;
+  padding: 10px;
+  gap: 10px;
+  background-color: white;
+  box-shadow: 1px 11px 15px -3px rgba(0, 0, 0, 0.43);
+  -webkit-box-shadow: 1px 11px 15px -3px rgba(0, 0, 0, 0.43);
+  -moz-box-shadow: 1px 11px 15px -3px rgba(0, 0, 0, 0.43);
+}
+.text {
+  max-width: 80%;
+  font-weight: 500;
+  font-size: 1.5rem;
+  @media screen and (max-width: $small) {
+    font-size: 1rem;
+  }
 }
 .done {
   span {
@@ -15,25 +34,54 @@
   }
 }
 
+.labelCheckbox {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  &:hover .newChecbox {
+    border: 2px solid #ccc;
+  }
+}
+
 .checbox {
   position: absolute;
-  z-index: -1;
-  opacity: 0;
-  :hover {
-    border-color: rebeccapurple;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  &:checked + .newChecbox > .iconCheckbox {
+    opacity: 1;
   }
-  &::before {
-    content: "";
-    display: inline-block;
+  &:checked + .newChecbox {
+    transition: all 0.1s ease;
+    background-color: green;
+  }
+}
+
+.newChecbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  transition: all 0.1s ease;
+}
+.iconCheckbox {
+  width: 100%;
+  opacity: 0;
+  transition: all 0.1s ease;
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  img {
     width: 20px;
     height: 20px;
-    flex-shrink: 0;
-    flex-grow: 0;
-    border: 1px solid #adb5bd;
-    border-radius: 0.25em;
-    margin-right: 0.5em;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 50% 50%;
   }
 }

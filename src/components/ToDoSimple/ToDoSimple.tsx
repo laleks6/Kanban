@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux";
 import FormAdd from "./form-add/FormAdd";
 import BlockTask from "./blockTask/BlockTask";
+import style from "./mainSimple.module.scss";
 
 function ToDoSimple() {
   const arrTask = useSelector((state) => state?.todo.todos);
   return (
-    <article className="todo">
+    <article className={style.blockSimple}>
       <FormAdd />
-      {arrTask && <BlockTask tasks={arrTask} />}
+      {arrTask.length > 0 && <BlockTask tasks={arrTask} />}
     </article>
   );
 }
