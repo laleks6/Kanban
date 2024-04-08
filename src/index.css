@@ -10,8 +10,6 @@ body {
   word-break: break-all;
 }
 
-main {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
+#root {
+  height: 100vh;
 }

@@ -1,12 +1,17 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import Main from "./components/Main";
-import "./App.css";
+import { Routes, Route, Link } from "react-router-dom";
+import TodoSimple from "./components/ToDoSimple/TodoSimple";
+import TodoComplex from "./components/TodoComplex/TodoComplex";
+import Layout from "./components/layout/Layout";
 
 function App() {
-  const [count, setCount] = useState(0);
-  return <Main />;
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="/simple" element={<TodoSimple />} />
+        <Route path="/simple" element={<TodoComplex />} />
+      </Route>
+    </Routes>
+  );
 }
 
 export default App;

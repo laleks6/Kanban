@@ -2,14 +2,15 @@
   position: relative;
   display: flex;
   align-items: center;
-  width: 30%;
+  justify-content: center;
   gap: 5px;
+  margin-bottom: 20px;
 }
 
 .inputAdd {
   border: 2px solid rgb(184, 182, 182);
   border-radius: 5px;
-  width: 100%;
+  width: 400px;
   height: 25px;
 }
 .valid {
@@ -43,10 +44,10 @@
 }
 .textValidation {
   position: absolute;
-  bottom: -15px;
+  bottom: -25px;
   left: 5px;
   width: 100%;
-
+  font-size: 1.1rem;
   color: red;
 }
 .button {

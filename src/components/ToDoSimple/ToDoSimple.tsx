@@ -3,7 +3,7 @@ import FormAdd from "./form-add/FormAdd";
 import BlockTask from "./blockTask/BlockTask";
 import style from "./mainSimple.module.scss";
 
-function ToDoSimple() {
+function TodoSimple() {
   const arrTask = useSelector((state) => state?.todo.todos);
   return (
     <article className={style.blockSimple}>
@@ -13,4 +13,4 @@ function ToDoSimple() {
   );
 }
 
-export default ToDoSimple;
+export default TodoSimple;
