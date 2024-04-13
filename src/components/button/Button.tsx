@@ -1,4 +1,4 @@
-import { addTodo } from "../../store/todoSlice";
+import { addTodo } from "../store/todoSlice";
 
 type Props = {
   className?: string;

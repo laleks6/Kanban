@@ -1,6 +1,6 @@
 import { SetStateAction, useState } from "react";
 import Input from "./Input";
-import Button from "../button/Button";
+import Button from "../../button/Button";
 import { useDispatch } from "react-redux";
 import { addTodo } from "../../store/todoSlice";
 import style from "../form-add/form.module.scss";
