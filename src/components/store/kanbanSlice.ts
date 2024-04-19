@@ -7,15 +7,14 @@ const kanbanSlice = createSlice({
     columns: [
       {
         id: Date.now(),
+        order: 0,
         name: "",
         status: "beforeCreate",
+        tasks: [
+          { id: 1, order: 0, data: 1 },
+          { id: 2, order: 1, data: 2 },
+        ],
       },
-    ],
-    tasks: [
-      { id: 1, order: 1, data: 1 },
-      { id: 2, order: 2, data: 2 },
-      { id: 3, order: 3, data: 3 },
-      { id: 4, order: 4, data: 4 },
     ],
   },
   reducers: {
@@ -24,7 +23,9 @@ const kanbanSlice = createSlice({
       state.columns.push({
         id: Date.now(),
         name: "",
+        order: state.columns.length,
         status: "beforeCreate",
+        tasks: [],
       });
     },
     changeNameTabel(state, action) {
@@ -44,16 +45,39 @@ const kanbanSlice = createSlice({
       tabel!.status = action.payload.status;
     },
     addTask(state, action) {
-      console.log("addtask dispatch", action.payload);
-      state.tasks.push({
+      console.log(
+        "addtask dispatch",
+        action.payload,
+        state.columns[action.payload.index].tasks.length
+      );
+      state.columns[action.payload.index].tasks.push({
         id: Date.now(),
-        order: state.tasks.length + 1,
-        data: action.payload,
+        order: state.columns[action.payload.index].tasks.length,
+        data: action.payload.task,
       });
     },
-    changeArr(state, action) {
+    changeIndexTask(state, action) {
       console.log("CHANGE", action.payload);
-      state.tasks = action.payload;
+      state.columns[action.payload.index].tasks = action.payload.tasks;
+    },
+    changeIndexTaskColumns(state, action) {
+      // dropColumnIndex, newArrTask, currentColumnIndex, currentColumnTasks
+      console.log(
+        "CHANGE",
+        action.payload.dropColumnIndex,
+        action.payload.newArrTasks,
+        action.payload.currentColumnIndex,
+        action.payload.currentColumnTasks
+      );
+      state.columns[action.payload.dropColumnIndex].tasks =
+        action.payload.newArrTasks;
+      state.columns[action.payload.currentColumnIndex].tasks =
+        action.payload.currentColumnTasks;
+    },
+    changeIndexColumns(state, action) {
+      // dropColumnIndex, currentColumnInde
+      state.columns = action.payload;
+      console.log(state.columns);
     },
   },
 });
@@ -64,6 +88,8 @@ export const {
   reorder,
   changeSatus,
   addTask,
-  changeArr,
+  changeIndexTask,
+  changeIndexTaskColumns,
+  changeIndexColumns,
 } = kanbanSlice.actions;
 export default kanbanSlice.reducer;

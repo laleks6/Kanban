@@ -1,48 +1,83 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { changeArr } from "../../store/kanbanSlice";
+import {
+  changeIndexTask,
+  changeIndexTaskColumns,
+} from "../../store/kanbanSlice";
 import style from "./task.module.scss";
-function Task({ data, tasks }) {
+function Task({ data, tasks, column, columns }) {
   const dispatch = useDispatch();
-  const changeArrTasks = (arr) => dispatch(changeArr(arr));
-  const handleDragStart = (e, task) => {
-    console.log(e, task, "handleDragStart");
-    e.dataTransfer.setData("task", `${task.order}`);
+  const changeTasks = (arr) => dispatch(changeIndexTask(arr));
+  const changeColumns = (arr) => dispatch(changeIndexTaskColumns(arr));
+  const handleDragStart = (e, task, columnId) => {
+    console.log(e, task, column, "handleDragStart");
+    if (e.target.classList.contains("mainTaskDiv")) {
+      e.dataTransfer.setData("task", `${task.id}`);
+      e.dataTransfer.setData("column", `${columnId.id}`);
+    } else {
+      e.preventDefault();
+    }
   };
-  const handleDragLeave = (e) => {};
+  const handleDragLeave = (e) => {
+    e.target.classList.remove(style.taskDND);
+  };
   const handleDragOver = (e) => {
     e.preventDefault();
+    e.target.classList.add(style.taskDND);
   };
-  const handleDragEnd = (e) => {};
-  const handleDrop = (e, task) => {
+  const handleDrop = (e, task, dropColumn, allColumns) => {
+    e.target.classList.remove(style.taskDND);
+    console.log(e, task, column, "handleDrop");
     e.preventDefault();
-    const deleteTask = [...tasks];
-    const currentOrder = +e.dataTransfer.getData("task");
-    const dropIndex = deleteTask.indexOf(task);
-    const currentTask = deleteTask.find((el) => el.order === currentOrder);
-    const currentIndex = deleteTask.indexOf(currentTask);
-    [deleteTask[dropIndex], deleteTask[currentIndex]] = [
-      deleteTask[currentIndex],
-      deleteTask[dropIndex],
-    ];
+    const newArrTasks = [...tasks];
+    const newArrColumns = [...allColumns];
+    const currentTaskId = +e.dataTransfer.getData("task");
+    const currentColumnId = +e.dataTransfer.getData("column");
+    const currentColumn = newArrColumns.find((el) => el.id === currentColumnId);
+    const currentTask = newArrTasks.find((el) => el.id === +currentTaskId);
+    const currentColumnIndex = newArrColumns.indexOf(currentColumn);
+    const dropColumnIndex = newArrColumns.indexOf(dropColumn);
+    const dropTaskIndex = newArrTasks.indexOf(task);
+    const currentTaskIndex = newArrTasks.indexOf(currentTask);
+    if (dropColumn.id === +currentColumnId) {
+      console.log(" columns true");
+      // [newArrTasks[dropTaskIndex], newArrTasks[currentTaskIndex]] = [
+      //   newArrTasks[currentTaskIndex],
+      //   newArrTasks[dropTaskIndex],
+      // ];
+      const deleteTask = newArrTasks.splice(currentTaskIndex, 1);
+      newArrTasks.splice(dropTaskIndex, 0, ...deleteTask);
+      console.log("AAAAAAA----", newArrTasks, deleteTask);
+      changeTasks({ index: dropColumnIndex, tasks: newArrTasks });
+    } else {
+      const currentColumnTasks = [...currentColumn.tasks];
+      const currentColumnTask = currentColumnTasks.find(
+        (el) => el.id === +currentTaskId
+      );
+      const currentColumnTaskIndex =
+        currentColumnTasks.indexOf(currentColumnTask);
 
-    changeArrTasks(deleteTask);
-    console.log(deleteTask, "delete");
+      // change tasks columns
+      currentColumnTasks.splice(currentColumnTaskIndex, 1);
+      newArrTasks.push(currentColumnTask);
+      changeColumns({
+        dropColumnIndex,
+        newArrTasks,
+        currentColumnIndex,
+        currentColumnTasks,
+      });
+    }
+    console.log("delete");
   };
-
-  // useEffect(() => {
-  //   setArrTasks(tasks);
-  // }, [tasks]);
 
   return (
     <div
-      className={style.task}
+      className={`mainTaskDiv ${style.task}`}
       draggable={true}
-      onDragStart={(e) => handleDragStart(e, data)}
+      onDragStart={(e) => handleDragStart(e, data, column, columns)}
       onDragLeave={(e) => handleDragLeave(e)}
-      onDragEnd={(e) => handleDragEnd(e)}
       onDragOver={(e) => handleDragOver(e)}
-      onDrop={(e) => handleDrop(e, data)}
+      onDrop={(e) => handleDrop(e, data, column, columns)}
     >
       {data.data}
     </div>
