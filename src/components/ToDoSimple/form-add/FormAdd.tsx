@@ -1,15 +1,15 @@
-import { SetStateAction, useState } from "react";
-import Input from "./Input";
+import React, { useState } from "react";
 import Button from "../../button/Button";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../hook/hook";
 import { addTodo } from "../../store/todoSlice";
 import style from "../form-add/form.module.scss";
 import iconAdd from "../../../assets/add.png";
+
 function FormAdd() {
   const [value, setValue] = useState("");
   const [validClass, setValidClass] = useState(true);
   const [textValid, setTextValid] = useState(true);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const validMax = "you have reached the 70 character limit";
   const validMin = "Insufficient number of characters";
   const onClick = () => {
@@ -17,7 +17,7 @@ function FormAdd() {
       setTextValid(validMin);
       setValidClass(false);
     } else {
-      dispatch(addTodo({ value }));
+      dispatch(addTodo(value));
       setValue("");
       setValidClass(true);
     }
@@ -38,7 +38,7 @@ function FormAdd() {
       <input
         type="text"
         className={`${style.inputAdd} ${!validClass && style.valid}`}
-        maxlength="70"
+        maxLength="70"
         onChange={(e) => oneChange(e)}
         value={value}
       />

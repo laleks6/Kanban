@@ -1,35 +1,34 @@
 .createTableBlock {
   width: 300px;
-
   input,
   .create,
   .titleColumn,
   p {
     width: 100%;
-    height: 30px;
     border-radius: 5px;
   }
 }
 
 .titleColumn {
   padding: 3px;
+  height: 30px;
   background-color: rgb(0, 0, 0, 0.2);
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 .create {
-  height: 100%;
+  display: flex;
+  height: 30px;
   transition: all 1px ease;
   cursor: pointer;
   input {
     border: none;
-    margin-bottom: 5px;
+    height: 30px;
   }
 }
 .createBtn {
   display: flex;
-  gap: 5px;
   button {
     padding: 2px;
     background-color: rgb(0, 0, 0, 0.2);
@@ -42,9 +41,13 @@
   background-color: rgb(0, 0, 0, 0.15);
   border: 1px solid #ffff;
 }
-// state
+
+// status
 .beforeCreate {
   .titleColumn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     h4 {
       display: none;
     }
@@ -53,17 +56,22 @@
   .mainBlokTasks {
     display: none;
   }
+  p {
+    text-align: center;
+  }
 }
+
 .createColumn {
   .titleColumn,
   .mainBlokTasks {
     display: none;
   }
 }
+
 .afterCreate {
   // height: 100%;
-  background-color: white;
-  border: 1px solid #a7a7a7;
+  background-color: #a8a8a8;
+  border: 2px solid #a8a8a8;
   border-radius: 5px;
   .titleColumn {
     background-color: none;

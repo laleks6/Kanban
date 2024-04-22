@@ -1,16 +1,15 @@
-import { addTodo } from "../store/todoSlice";
+import React from "react";
 
 type Props = {
-  className?: string;
-  onClick?: () => void;
-  text?: string;
-  icon?: string;
+  className: string;
+  onClick: () => void;
+  text: string;
+  icon: string;
 };
 function Button({ className, onClick, text, icon }: Props) {
-  console.log("btn");
   return (
-    <button className={className} onClick={onClick}>
-      {icon && <img src={icon} alt="iconAdd"></img>}
+    <button className={className} onClick={onClick} type="button">
+      {icon && <img src={icon} alt="iconAdd" />}
       {text && text}
     </button>
   );

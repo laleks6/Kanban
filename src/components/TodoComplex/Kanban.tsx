@@ -1,13 +1,11 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useAppSelector } from "../hook/hook";
 import style from "./complex.module.scss";
 import CreateColumn from "./createColumn/CreateColumn";
 
-function TodoComplex() {
+function Kanban() {
   // const [tasks, setTasks] = useState(arrTasks);
-  const dispatch = useDispatch();
-  const columns = useSelector((state) => state.kanban.columns);
+  const columns = useAppSelector((state) => state.kanban.columns);
 
   return (
     <article className={style.complex}>
@@ -23,4 +21,4 @@ function TodoComplex() {
   );
 }
 
-export default TodoComplex;
+export default Kanban;

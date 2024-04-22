@@ -1,10 +1,11 @@
-import { useSelector } from "react-redux";
+import React from "react";
+import { useAppSelector } from "../hook/hook";
 import FormAdd from "./form-add/FormAdd";
 import BlockTask from "./blockTask/BlockTask";
 import style from "./mainSimple.module.scss";
 
 function TodoSimple() {
-  const arrTask = useSelector((state) => state?.todo.todos);
+  const arrTask = useAppSelector((state) => state?.todo.todos);
   return (
     <article className={style.blockSimple}>
       <FormAdd />

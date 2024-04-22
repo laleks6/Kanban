@@ -1,70 +1,39 @@
-import { createSlice } from "@reduxjs/toolkit";
-
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+/* eslint-disable no-param-reassign */
+type Todo = {
+  id: number;
+  discription: string;
+  status: boolean;
+};
+type TodosState = {
+  todos: Todo[];
+};
+const initialState: TodosState = {
+  todos: [],
+};
 const todoSlice = createSlice({
   name: "todo",
-  initialState: {
-    todos: [],
-    tabels: [
-      {
-        id: Date.now(),
-        name: "",
-        status: "beforeCreate",
-      },
-    ],
-  },
+  initialState,
   reducers: {
-    addTodo(state, action) {
+    addTodo(state, action: PayloadAction<string>) {
       state.todos.push({
         id: Date.now(),
-        discription: action.payload.value,
+        discription: action.payload,
         status: true,
       });
-      console.log(action.payload.value, "add");
+      console.log(action.payload, "add");
     },
-    deleteTodo(state, action) {
+    deleteTodo(state, action: PayloadAction<number>) {
       console.log(action.payload, "delete");
       state.todos = state.todos.filter((el) => el.id !== action.payload);
     },
     toggleTodo(state, action) {
       console.log(action.payload, "toggle");
       const task = state.todos.find((el) => el.id === action.payload);
-      task.status = !task.status;
+      if (task) task.status = !task.status;
     },
-    createTabel(state) {
-      console.log("createtable");
-      state.tabels.push({
-        id: Date.now(),
-        name: "",
-        status: "beforeCreate",
-      });
-    },
-    changeNameTabel(state, action) {
-      console.log(action.payload.id, action.payload.name, "changeNameTabel");
-      const tabel = state.tabels.find((el) => el.id === action.payload.id);
-
-      tabel!.name = action.payload.name;
-    },
-    reorder(state, action) {
-      console.log(action.payload, "changeNameTabel");
-      state.tabels = [...action.payload];
-    },
-    changeSatus(state, action) {
-      console.log(action.payload.id, action.payload.status, "changeSatus");
-      const tabel = state.tabels.find((el) => el.id === action.payload.id);
-
-      tabel!.status = action.payload.status;
-    },
-    addTask(state, action) {},
   },
 });
 
-export const {
-  addTodo,
-  deleteTodo,
-  toggleTodo,
-  createTabel,
-  changeNameTabel,
-  reorder,
-  changeSatus,
-} = todoSlice.actions;
+export const { addTodo, deleteTodo, toggleTodo } = todoSlice.actions;
 export default todoSlice.reducer;

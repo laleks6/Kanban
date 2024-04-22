@@ -1,68 +1,79 @@
-import { useState } from "react";
-import { Provider, useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hook/hook";
 import {
   createTabel,
   changeNameTabel,
   changeSatus,
   changeIndexColumns,
 } from "../../store/kanbanSlice";
+import { type TypeColumn } from "../../types/baseTypes";
 import Button from "../../button/Button";
 import style from "./createColumn.module.scss";
 import Task from "../task/Task";
 import AddTask from "./addTask/AddTask";
-type Props = { key: string; column: any; inedex: any; columns: any };
+
+type Props = {
+  column: TypeColumn;
+  inedex: number;
+  columns: TypeColumn[];
+};
 function CreateColumn({ column, inedex, columns }: Props) {
-  const status = useSelector((state) => state.kanban.columns[inedex].status);
-  const tasks = useSelector((state) => state.kanban.columns[inedex].tasks);
+  const status = useAppSelector((state) => state.kanban.columns[inedex].status);
+  const tasks = useAppSelector((state) => state.kanban.columns[inedex].tasks);
   const [nameBlock, setNameBlock] = useState("");
-  const dispatch = useDispatch();
-  const changeColumns = (arr) => dispatch(changeIndexColumns(arr));
+  const dispatch = useAppDispatch();
+  const changeColumns = (arr: TypeColumn[]) =>
+    dispatch(changeIndexColumns(arr));
 
   console.log(column, "arrNameTaskBlock");
-  const clickCreateBlock = () => {
+  const clickCreateBlock = (): void => {
     console.log("clickCreateBlock");
     dispatch(changeSatus({ id: column.id, status: "createColumn" }));
   };
   const clickCloseBtn = () => {
-    // setActive(!active);
     console.log("clickCloseBtn");
-    // setStyleActive("beforeCreate");
     dispatch(changeSatus({ id: column.id, status: "beforeCreate" }));
   };
   const clickCreateBtn = () => {
-    // setStyleActive("afterCreate");
     dispatch(createTabel());
     dispatch(changeNameTabel({ id: column.id, name: nameBlock }));
     dispatch(changeSatus({ id: column.id, status: "afterCreate" }));
     console.log("clickCreateBtn");
-    // setCreateBlock(!creatBlock);
   };
 
-  const handleDragStart = (e, startColumn, arrColumns) => {
+  const handleDragStart = (
+    e: React.DragEvent<HTMLDivElement>,
+    startColumn: TypeColumn
+  ) => {
     e.dataTransfer.setData("startColumn", `${startColumn.id}`);
   };
-  const handleDragLeave = (e) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.currentTarget.classList.remove(style.columnDND);
   };
-  const handleDragOver = (e) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.currentTarget.classList.add(style.columnDND);
   };
-  const handleDragEnd = (e) => {};
-  const handleDrop = (e, dropColumn, arrColumns) => {
+  const handleDrop = (
+    e: React.DragEvent<HTMLDivElement>,
+    dropColumn: TypeColumn,
+    arrColumns: TypeColumn[]
+  ) => {
     e.preventDefault();
     e.currentTarget.classList.remove(style.columnDND);
-    const newArrColumns = [...arrColumns];
+    const newArrColumns: TypeColumn[] = [...arrColumns];
     const currentColumnId = +e.dataTransfer.getData("startColumn");
     const currentColumn = newArrColumns.find((el) => el.id === currentColumnId);
-    const currentColumnIndex = newArrColumns.indexOf(currentColumn);
-    const dropColumnIndex = newArrColumns.indexOf(dropColumn);
-    [newArrColumns[dropColumnIndex], newArrColumns[currentColumnIndex]] = [
-      newArrColumns[currentColumnIndex],
-      newArrColumns[dropColumnIndex],
-    ];
-    changeColumns(newArrColumns);
+    if (currentColumn) {
+      const currentColumnIndex = newArrColumns.indexOf(currentColumn);
+      const dropColumnIndex = newArrColumns.indexOf(dropColumn);
+      [newArrColumns[dropColumnIndex], newArrColumns[currentColumnIndex]] = [
+        newArrColumns[currentColumnIndex],
+        newArrColumns[dropColumnIndex],
+      ];
+      console.log("CHEEECK COLOMUNS", newArrColumns);
+      changeColumns(newArrColumns);
+    }
   };
 
   console.log(
@@ -76,15 +87,17 @@ function CreateColumn({ column, inedex, columns }: Props) {
     <div className={` ${style.createTableBlock} ${style[status]}`}>
       <div
         className={`title ${style.titleColumn}`}
-        draggable={true}
-        onDragStart={(e) => handleDragStart(e, column, columns)}
+        draggable
+        onDragStart={(e) => handleDragStart(e, column)}
         onDragLeave={(e) => handleDragLeave(e)}
-        onDragEnd={(e) => handleDragEnd(e)}
         onDragOver={(e) => handleDragOver(e)}
         onDrop={(e) => handleDrop(e, column, columns)}
+        onClick={clickCreateBlock}
+        onKeyDown={clickCreateBlock}
+        aria-hidden
       >
         <h4>{column?.name}</h4>
-        <p onClick={clickCreateBlock}>Create column +</p>
+        <p>Create column +</p>
       </div>
       <div className={`${style.create} `}>
         <input
@@ -97,21 +110,26 @@ function CreateColumn({ column, inedex, columns }: Props) {
         <div className={style.createBtn}>
           <Button
             className={style.input}
-            text={"add"}
+            text="add"
             onClick={clickCreateBtn}
+            icon=""
           />
-          <Button className={style.input} text={"X"} onClick={clickCloseBtn} />
+          <Button
+            className={style.input}
+            text="X"
+            onClick={clickCloseBtn}
+            icon=""
+          />
         </div>
       </div>
       <div className={style.mainBlokTasks}>
-        {tasks.map((el, i) => (
+        {tasks.map((el) => (
           <Task
-            key={`id_${i}`}
+            key={el.id}
             data={el}
             tasks={tasks}
             column={column}
             columns={columns}
-            columnInedex={inedex}
           />
         ))}
         <AddTask columnInedex={inedex} />

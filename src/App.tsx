@@ -1,6 +1,6 @@
 import { Routes, Route, Link } from "react-router-dom";
 import TodoSimple from "./components/ToDoSimple/TodoSimple";
-import TodoComplex from "./components/TodoComplex/TodoComplex";
+import Kanban from "./components/TodoComplex/Kanban";
 import Layout from "./components/layout/Layout";
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route path="/simple" element={<TodoSimple />} />
-        <Route path="/complex" element={<TodoComplex />} />
+        <Route path="/complex" element={<Kanban />} />
       </Route>
     </Routes>
   );

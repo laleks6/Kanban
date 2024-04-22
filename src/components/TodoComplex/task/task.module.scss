@@ -1,12 +1,30 @@
 .task {
+  position: relative;
   min-height: 40px;
   border: 2px solid #a7a7a7;
   cursor: grab;
+  padding: 5px;
   transition: all 0.3s ease;
+  &:hover .blockIcon {
+    opacity: 1;
+    cursor: pointer;
+  }
 }
 
 .taskDND {
   background-color: #eee3e8;
   border-color: #e584b1 #a7a7a7 #a7a7a7 #a7a7a7;
   // border-color: #ffffff;
+}
+
+.blockIcon {
+  position: absolute;
+  padding: 3px;
+  right: 0;
+  top: 0;
+  opacity: 0;
+  img {
+    width: 14px;
+    height: 14px;
+  }
 }

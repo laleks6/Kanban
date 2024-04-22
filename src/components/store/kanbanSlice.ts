@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Task from "../TodoComplex/task/Task";
-
+/* eslint-disable no-param-reassign */
 const kanbanSlice = createSlice({
   name: "kanban",
   initialState: {
@@ -11,8 +10,8 @@ const kanbanSlice = createSlice({
         name: "",
         status: "beforeCreate",
         tasks: [
-          { id: 1, order: 0, data: 1 },
-          { id: 2, order: 1, data: 2 },
+          { id: 1, order: 0, data: 1, tags: [], description: "" },
+          { id: 2, order: 1, data: 2, tags: [], description: "" },
         ],
       },
     ],
@@ -54,6 +53,8 @@ const kanbanSlice = createSlice({
         id: Date.now(),
         order: state.columns[action.payload.index].tasks.length,
         data: action.payload.task,
+        tags: [],
+        description: "",
       });
     },
     changeIndexTask(state, action) {
@@ -69,6 +70,7 @@ const kanbanSlice = createSlice({
         action.payload.currentColumnIndex,
         action.payload.currentColumnTasks
       );
+
       state.columns[action.payload.dropColumnIndex].tasks =
         action.payload.newArrTasks;
       state.columns[action.payload.currentColumnIndex].tasks =

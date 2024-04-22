@@ -1,7 +1,7 @@
 type Props = {
-  oneChange?: (e: any) => void;
-  className?: string;
-  boolen?: boolean;
+  oneChange: (e: any) => void;
+  className: string;
+  boolen: boolean;
 };
 function Input({ oneChange, className, boolen }: Props) {
   console.log("input");
@@ -9,7 +9,7 @@ function Input({ oneChange, className, boolen }: Props) {
     <input
       type="text"
       className={`${className} ${boolen}`}
-      maxlength="50"
+      maxLength="50"
       onChange={(e) => oneChange(e)}
     />
   );

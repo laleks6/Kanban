@@ -1,10 +1,16 @@
-import { useDispatch } from "react-redux";
+import React from "react";
+import { useAppDispatch } from "../../hook/hook";
 import { deleteTodo, toggleTodo } from "../../store/todoSlice";
+import { type TaskTodo } from "../../types/baseTypes";
 import style from "./Task.module.scss";
 import binImg from "../../../assets/bin_icon.png";
 import checkBOx from "../../../assets/check-mark-green.png";
-function BlockTask({ tasks }) {
-  const dispatch = useDispatch();
+
+type Props = {
+  tasks: TaskTodo[];
+};
+function BlockTask({ tasks }: Props) {
+  const dispatch = useAppDispatch();
   console.log(tasks, "task");
   return (
     <div className={style.taskBlock}>
@@ -12,9 +18,9 @@ function BlockTask({ tasks }) {
         <div
           className={` ${style.task} ${!el.status && style.done} `}
           key={el.id}
-          id={el.id}
+          id={`e${el.id}`}
         >
-          <label className={style.labelCheckbox} for={`e${el.id}`}>
+          <label className={style.labelCheckbox} htmlFor={`e${el.id}`}>
             <input
               id={`e${el.id}`}
               className={style.checbox}
