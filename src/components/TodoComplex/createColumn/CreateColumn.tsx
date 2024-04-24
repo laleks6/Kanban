@@ -11,6 +11,8 @@ import Button from "../../button/Button";
 import style from "./createColumn.module.scss";
 import Task from "../task/Task";
 import AddTask from "./addTask/AddTask";
+import dots from "../../../assets/dots.png";
+import SettingsModal from "./settingsModal/SettingsModal";
 
 type Props = {
   column: TypeColumn;
@@ -20,25 +22,40 @@ type Props = {
 function CreateColumn({ column, inedex, columns }: Props) {
   const status = useAppSelector((state) => state.kanban.columns[inedex].status);
   const tasks = useAppSelector((state) => state.kanban.columns[inedex].tasks);
+  const colorTitle = useAppSelector(
+    (state) => state.kanban.columns[inedex].color
+  );
   const [nameBlock, setNameBlock] = useState("");
+  const [statusCreate, setStatusCreate] = useState(false);
+  const [statusSettings, setStatusSettings] = useState(false);
   const dispatch = useAppDispatch();
   const changeColumns = (arr: TypeColumn[]) =>
     dispatch(changeIndexColumns(arr));
 
-  console.log(column, "arrNameTaskBlock");
   const clickCreateBlock = (): void => {
     console.log("clickCreateBlock");
     dispatch(changeSatus({ id: column.id, status: "createColumn" }));
   };
   const clickCloseBtn = () => {
     console.log("clickCloseBtn");
-    dispatch(changeSatus({ id: column.id, status: "beforeCreate" }));
+    if (!statusCreate) {
+      dispatch(changeSatus({ id: column.id, status: "beforeCreate" }));
+    } else dispatch(changeSatus({ id: column.id, status: "afterCreate" }));
   };
   const clickCreateBtn = () => {
-    dispatch(createTabel());
-    dispatch(changeNameTabel({ id: column.id, name: nameBlock }));
-    dispatch(changeSatus({ id: column.id, status: "afterCreate" }));
-    console.log("clickCreateBtn");
+    if (nameBlock) {
+      dispatch(changeNameTabel({ id: column.id, name: nameBlock }));
+      dispatch(changeSatus({ id: column.id, status: "afterCreate" }));
+      if (!statusCreate) {
+        dispatch(createTabel());
+        setStatusCreate(!statusCreate);
+      }
+      console.log("clickCreateBtn");
+    }
+  };
+  const clickSettingsIcon = () => {
+    setStatusSettings(!statusSettings);
+    console.log("Click Settings");
   };
 
   const handleDragStart = (
@@ -85,6 +102,14 @@ function CreateColumn({ column, inedex, columns }: Props) {
 
   return (
     <div className={` ${style.createTableBlock} ${style[status]}`}>
+      {statusSettings && (
+        <div
+          className={style.blackout}
+          onClick={() => setStatusSettings(!statusSettings)}
+          onKeyDown={() => setStatusSettings(!statusSettings)}
+          aria-hidden
+        />
+      )}
       <div
         className={`title ${style.titleColumn}`}
         draggable
@@ -92,30 +117,47 @@ function CreateColumn({ column, inedex, columns }: Props) {
         onDragLeave={(e) => handleDragLeave(e)}
         onDragOver={(e) => handleDragOver(e)}
         onDrop={(e) => handleDrop(e, column, columns)}
-        onClick={clickCreateBlock}
-        onKeyDown={clickCreateBlock}
-        aria-hidden
       >
-        <h4>{column?.name}</h4>
-        <p>Create column +</p>
+        <div
+          className={style.titleName}
+          onClick={clickCreateBlock}
+          onKeyDown={clickCreateBlock}
+          aria-hidden
+        >
+          <h4
+            style={{ backgroundColor: colorTitle }}
+            className={colorTitle ? style.changeFontColor : ""}
+          >
+            {column?.name}
+          </h4>
+        </div>
+        <div
+          className={style.settingsTitle}
+          onClick={clickSettingsIcon}
+          onKeyDown={clickSettingsIcon}
+          aria-hidden
+        >
+          <img src={dots} alt="dots-settings" />
+        </div>
+
+        <SettingsModal index={inedex} status={statusSettings} />
       </div>
       <div className={`${style.create} `}>
-        <input
-          className={style.input}
-          type="text"
-          maxLength={70}
+        <textarea
+          className={style.columnTextarea}
+          maxLength={30}
           placeholder=""
           onChange={(e) => setNameBlock(e.target.value)}
         />
         <div className={style.createBtn}>
           <Button
-            className={style.input}
-            text="add"
+            className={style.doneBtn}
+            text="Done"
             onClick={clickCreateBtn}
             icon=""
           />
           <Button
-            className={style.input}
+            className={style.closeBtn}
             text="X"
             onClick={clickCloseBtn}
             icon=""

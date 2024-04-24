@@ -7,8 +7,9 @@ const kanbanSlice = createSlice({
       {
         id: Date.now(),
         order: 0,
-        name: "",
+        name: "+ Create column",
         status: "beforeCreate",
+        color: "",
         tasks: [
           { id: 1, order: 0, data: 1, tags: [], description: "" },
           { id: 2, order: 1, data: 2, tags: [], description: "" },
@@ -21,11 +22,15 @@ const kanbanSlice = createSlice({
       console.log("createtable");
       state.columns.push({
         id: Date.now(),
-        name: "",
+        name: "+ Create column",
         order: state.columns.length,
         status: "beforeCreate",
+        color: "",
         tasks: [],
       });
+    },
+    removeColumn(state, action) {
+      state.columns.splice(action.payload, 1);
     },
     changeNameTabel(state, action) {
       console.log(action.payload.id, action.payload.name, "changeNameTabel");
@@ -81,6 +86,10 @@ const kanbanSlice = createSlice({
       state.columns = action.payload;
       console.log(state.columns);
     },
+    changeBackgroundColorTitle(state, action) {
+      // dropColumnIndex, currentColumnInde
+      state.columns[action.payload.index].color = action.payload.color;
+    },
   },
 });
 
@@ -93,5 +102,7 @@ export const {
   changeIndexTask,
   changeIndexTaskColumns,
   changeIndexColumns,
+  changeBackgroundColorTitle,
+  removeColumn,
 } = kanbanSlice.actions;
 export default kanbanSlice.reducer;

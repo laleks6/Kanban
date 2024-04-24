@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import TodoSimple from "./components/ToDoSimple/TodoSimple";
 import Kanban from "./components/TodoComplex/Kanban";
 import Layout from "./components/layout/Layout";

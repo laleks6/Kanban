@@ -1,0 +1,113 @@
+.settingsModal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  // top: 7px;
+  // right: -5px;
+  top: 0px;
+  right: -5px;
+  gap: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #d6d6d6;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  font-size: 1.2rem;
+  z-index: -1;
+}
+@keyframes animationModalSettings {
+  0% {
+    opacity: 0;
+    top: -20px;
+    right: -30px;
+    z-index: 6;
+  }
+  50% {
+    opacity: 0.5;
+    top: -10px;
+    right: -15px;
+  }
+  100% {
+    opacity: 1;
+    top: 0px;
+    right: -5px;
+  }
+}
+
+.colorsSettingBlock,
+.colorsSetting {
+  width: 100%;
+}
+.colorsSettingBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-top: 1px solid white;
+  padding-top: 5px;
+}
+.colorsSetting {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  input {
+    display: none; /* <--скрываем дефолтный чекбокс */
+  }
+  [type="radio"]:checked + .newChecbox:before {
+    /* <-- ставим иконку, когда чекбокс включен  */
+    content: "\2714";
+    position: absolute;
+    top: -2px;
+    right: 10px;
+    font-size: 1.1rem;
+    color: rgb(121, 121, 121);
+  }
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 2px;
+  }
+}
+.colorBlock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+}
+.noneColorsIcon {
+  width: 17px;
+}
+.colorIcon {
+  display: block;
+  width: 17px;
+  height: 17px;
+  border: 10px;
+}
+
+.modalActive {
+  // animation: animationModalSettings 0.2s ease-in-out;
+  opacity: 1;
+  top: 0px;
+  right: -5px;
+  // top: -20px;
+  // right: -30px;
+  z-index: 6;
+}
+.deleteSetting {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+  cursor: pointer;
+  &:hover {
+    background-color: #ca0d0d6b;
+  }
+  img {
+    width: 20px;
+    height: auto;
+  }
+}

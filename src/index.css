@@ -6,8 +6,9 @@
 body {
   font-size: 10px;
   min-height: 100vh;
-  background-color: #ebe8ed;
+  background-color: #f0f0ef;
   word-break: break-all;
+  overflow: hidden;
 }
 
 #root {
