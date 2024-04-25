@@ -9,7 +9,6 @@ import binIcon from "../../../../assets/recycle-bin.png";
 import noneIcon from "../../../../assets/none_icon.png";
 import { Target, color } from "framer-motion";
 const colors = {
-  None: "",
   Gray: "#6a6a6a",
   Brown: "#603b2c",
   Orange: "#854c1d",
@@ -19,6 +18,7 @@ const colors = {
   Purple: "#492f64",
   Pink: "#69314c",
   Red: "#6e3630",
+  None: "",
 };
 type Props = {
   index: number;

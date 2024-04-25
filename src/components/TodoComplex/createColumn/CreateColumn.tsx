@@ -13,6 +13,7 @@ import Task from "../task/Task";
 import AddTask from "./addTask/AddTask";
 import dots from "../../../assets/dots.png";
 import SettingsModal from "./settingsModal/SettingsModal";
+import { ColumnIndexContext } from "../../context/columnContext";
 
 type Props = {
   column: TypeColumn;
@@ -101,82 +102,85 @@ function CreateColumn({ column, inedex, columns }: Props) {
   );
 
   return (
-    <div className={` ${style.createTableBlock} ${style[status]}`}>
-      {statusSettings && (
+    <ColumnIndexContext.Provider value={inedex}>
+      <div className={` ${style.createTableBlock} ${style[status]}`}>
+        {statusSettings && (
+          <div
+            className={style.blackout}
+            onClick={() => setStatusSettings(!statusSettings)}
+            onKeyDown={() => setStatusSettings(!statusSettings)}
+            aria-hidden
+          />
+        )}
         <div
-          className={style.blackout}
-          onClick={() => setStatusSettings(!statusSettings)}
-          onKeyDown={() => setStatusSettings(!statusSettings)}
-          aria-hidden
-        />
-      )}
-      <div
-        className={`title ${style.titleColumn}`}
-        draggable
-        onDragStart={(e) => handleDragStart(e, column)}
-        onDragLeave={(e) => handleDragLeave(e)}
-        onDragOver={(e) => handleDragOver(e)}
-        onDrop={(e) => handleDrop(e, column, columns)}
-      >
-        <div
-          className={style.titleName}
-          onClick={clickCreateBlock}
-          onKeyDown={clickCreateBlock}
-          aria-hidden
+          className={`title ${style.titleColumn}`}
+          draggable
+          onDragStart={(e) => handleDragStart(e, column)}
+          onDragLeave={(e) => handleDragLeave(e)}
+          onDragOver={(e) => handleDragOver(e)}
+          onDrop={(e) => handleDrop(e, column, columns)}
         >
-          <h4
-            style={{ backgroundColor: colorTitle }}
-            className={colorTitle ? style.changeFontColor : ""}
+          <div
+            className={style.titleName}
+            onClick={clickCreateBlock}
+            onKeyDown={clickCreateBlock}
+            aria-hidden
           >
-            {column?.name}
-          </h4>
-        </div>
-        <div
-          className={style.settingsTitle}
-          onClick={clickSettingsIcon}
-          onKeyDown={clickSettingsIcon}
-          aria-hidden
-        >
-          <img src={dots} alt="dots-settings" />
-        </div>
+            <h4
+              style={{ backgroundColor: colorTitle }}
+              className={colorTitle ? style.changeFontColor : ""}
+            >
+              {column?.name}
+            </h4>
+          </div>
+          <div
+            className={style.settingsTitle}
+            onClick={clickSettingsIcon}
+            onKeyDown={clickSettingsIcon}
+            aria-hidden
+          >
+            <img src={dots} alt="dots-settings" />
+          </div>
 
-        <SettingsModal index={inedex} status={statusSettings} />
-      </div>
-      <div className={`${style.create} `}>
-        <textarea
-          className={style.columnTextarea}
-          maxLength={30}
-          placeholder=""
-          onChange={(e) => setNameBlock(e.target.value)}
-        />
-        <div className={style.createBtn}>
-          <Button
-            className={style.doneBtn}
-            text="Done"
-            onClick={clickCreateBtn}
-            icon=""
+          <SettingsModal index={inedex} status={statusSettings} />
+        </div>
+        <div className={`${style.create} `}>
+          <textarea
+            className={style.columnTextarea}
+            maxLength={30}
+            placeholder=""
+            onChange={(e) => setNameBlock(e.target.value)}
           />
-          <Button
-            className={style.closeBtn}
-            text="X"
-            onClick={clickCloseBtn}
-            icon=""
-          />
+          <div className={style.createBtn}>
+            <Button
+              className={style.doneBtn}
+              text="Done"
+              onClick={clickCreateBtn}
+              icon=""
+            />
+            <Button
+              className={style.closeBtn}
+              text="X"
+              onClick={clickCloseBtn}
+              icon=""
+            />
+          </div>
+        </div>
+        <div className={style.mainBlokTasks}>
+          {tasks.map((el, i) => (
+            <Task
+              key={el.id}
+              data={el}
+              tasks={tasks}
+              taskIndex={i}
+              column={column}
+              columns={columns}
+            />
+          ))}
+          <AddTask columnInedex={inedex} />
         </div>
       </div>
-      <div className={style.mainBlokTasks}>
-        {tasks.map((el) => (
-          <Task
-            key={el.id}
-            data={el}
-            tasks={tasks}
-            column={column}
-            columns={columns}
-          />
-        ))}
-        <AddTask columnInedex={inedex} />
-      </div>
-    </div>
+    </ColumnIndexContext.Provider>
   );
 }
 

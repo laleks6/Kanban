@@ -19,3 +19,14 @@ export type TaskTodo = {
   discription: string;
   status: boolean;
 };
+
+export type Tag = {
+  value: string;
+  bgColor: string;
+  textColor: string;
+};
+export type ColumnTag = {
+  columnIndex: number;
+  taskIndex: number;
+  tag: Tag;
+};

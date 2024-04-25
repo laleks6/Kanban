@@ -6,16 +6,20 @@ import {
   changeIndexTaskColumns,
 } from "../../store/kanbanSlice";
 import { type TaskKanban, TypeColumn } from "../../types/baseTypes";
+import { TaskIndexContext } from "../../context/columnContext";
 import style from "./task.module.scss";
-import iconPaintbrush from "../../../assets/icons8-paintbrush.png";
+import Tags from "./tags/Tags";
+import Button from "../../button/Button";
+import dotsIcon from "../../../assets/dots.png";
 
 type Props = {
   data: TaskKanban;
   tasks: TaskKanban[];
+  taskIndex: number;
   column: TypeColumn;
   columns: TypeColumn[];
 };
-function Task({ data, tasks, column, columns }: Props) {
+function Task({ data, tasks, taskIndex, column, columns }: Props) {
   const dispatch = useAppDispatch();
   const changeTasks = (arr: { index: number; tasks: TaskKanban[] }) =>
     dispatch(changeIndexTask(arr));
@@ -41,12 +45,12 @@ function Task({ data, tasks, column, columns }: Props) {
     }
   };
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLDivElement;
+    const target = e.currentTarget as HTMLDivElement;
     target.classList.remove(style.taskDND);
   };
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    const target = e.target as HTMLDivElement;
+    const target = e.currentTarget as HTMLDivElement;
     target.classList.add(style.taskDND);
   };
   const handleDrop = (
@@ -55,7 +59,7 @@ function Task({ data, tasks, column, columns }: Props) {
     dropColumn: TypeColumn,
     arrColumn: TypeColumn[]
   ) => {
-    const target = e.target as HTMLDivElement;
+    const target = e.currentTarget as HTMLDivElement;
     target.classList.remove(style.taskDND);
     console.log(e, task, column, "handleDrop");
     e.preventDefault();
@@ -107,34 +111,28 @@ function Task({ data, tasks, column, columns }: Props) {
   };
 
   return (
-    <div
-      className={`blockTask ${style.task}`}
-      draggable
-      onDragStart={(e) => handleDragStart(e, data, column)}
-      onDragLeave={(e) => handleDragLeave(e)}
-      onDragOver={(e) => handleDragOver(e)}
-      onDrop={(e) => handleDrop(e, data, column, columns)}
-    >
-      <div className={style.taskInfo}>
-        <p className={style.taskName}> {data.data}</p>
-
-        {data.tags &&
-          data.tags.map((el) => (
-            <div key={Date.now()} className={style.taskTags}>
-              {el}
-            </div>
-          ))}
-      </div>
-
+    <TaskIndexContext.Provider value={taskIndex}>
       <div
-        className={style.blockIcon}
-        onClick={cliclChangeTaks}
-        onKeyDown={cliclChangeTaks}
-        aria-hidden
+        className={`blockTask ${style.task}`}
+        draggable
+        onDragStart={(e) => handleDragStart(e, data, column)}
+        onDragLeave={(e) => handleDragLeave(e)}
+        onDragOver={(e) => handleDragOver(e)}
+        onDrop={(e) => handleDrop(e, data, column, columns)}
       >
-        <img src={iconPaintbrush} alt="icon-Paintbrush" />
+        <div className={style.taskInfo}>
+          <p className={style.taskPrevDescription}> {data.data}</p>
+          <Tags data={data.tags} />
+        </div>
+
+        <Button
+          className={style.chengeTask}
+          onClick={cliclChangeTaks}
+          icon={dotsIcon}
+          text=""
+        />
       </div>
-    </div>
+    </TaskIndexContext.Provider>
   );
 }
 export default Task;
