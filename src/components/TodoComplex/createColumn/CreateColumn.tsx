@@ -13,7 +13,7 @@ import Task from "../task/Task";
 import AddTask from "./addTask/AddTask";
 import dots from "../../../assets/dots.png";
 import SettingsModal from "./settingsModal/SettingsModal";
-import { ColumnIndexContext } from "../../context/columnContext";
+import { ColumnIndexContext } from "../../context/Context";
 
 type Props = {
   column: TypeColumn;
@@ -147,7 +147,6 @@ function CreateColumn({ column, inedex, columns }: Props) {
         <div className={`${style.create} `}>
           <textarea
             className={style.columnTextarea}
-            maxLength={30}
             placeholder=""
             onChange={(e) => setNameBlock(e.target.value)}
           />

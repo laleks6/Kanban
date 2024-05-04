@@ -20,7 +20,8 @@ export type TaskTodo = {
   status: boolean;
 };
 
-export type Tag = {
+export type TypeTag = {
+  id: number;
   value: string;
   bgColor: string;
   textColor: string;
@@ -28,5 +29,5 @@ export type Tag = {
 export type ColumnTag = {
   columnIndex: number;
   taskIndex: number;
-  tag: Tag;
+  tag: TypeTag;
 };

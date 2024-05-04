@@ -9,14 +9,15 @@ function Kanban() {
 
   return (
     <article className={style.complex}>
-      {columns.map((el, i) => (
-        <CreateColumn
-          key={`${el.id}`}
-          column={el}
-          inedex={i}
-          columns={columns}
-        />
-      ))}
+      {columns &&
+        columns.map((el, i) => (
+          <CreateColumn
+            key={`${el.id}`}
+            column={el}
+            inedex={i}
+            columns={columns}
+          />
+        ))}
     </article>
   );
 }

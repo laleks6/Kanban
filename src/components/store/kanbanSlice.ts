@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ColumnTag } from "../types/baseTypes";
+import { ColumnTag, Tag } from "../types/baseTypes";
 /* eslint-disable no-param-reassign */
 const kanbanSlice = createSlice({
   name: "kanban",
@@ -97,6 +97,21 @@ const kanbanSlice = createSlice({
       console.log(action.payload, "TAG");
       state.columns[columnIndex].tasks[taskIndex].tags.push(tag);
     },
+    removeTag(state, action) {
+      console.log(action.payload, "TAG delete");
+      const { columnIndex, taskIndex, tagIndex } = action.payload;
+      console.log(state.columns[columnIndex].tasks[taskIndex].tags, "-----");
+      state.columns[columnIndex].tasks[taskIndex].tags.splice(tagIndex, 1);
+    },
+    changeColorTag(state, action) {
+      console.log(action.payload, "TAG changeColorTag");
+      const { columnIndex, taskIndex, tagTaskIndex, bgColor, textColor } =
+        action.payload;
+      const tag =
+        state.columns[columnIndex].tasks[taskIndex].tags[tagTaskIndex];
+      tag.bgColor = bgColor;
+      tag.textColor = textColor;
+    },
   },
 });
 
@@ -112,5 +127,7 @@ export const {
   changeBackgroundColorTitle,
   removeColumn,
   addTaskTag,
+  removeTag,
+  changeColorTag,
 } = kanbanSlice.actions;
 export default kanbanSlice.reducer;

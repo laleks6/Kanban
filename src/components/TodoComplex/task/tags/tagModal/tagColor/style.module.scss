@@ -1,0 +1,24 @@
+.paint {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  width: 185px;
+  background-color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.colorBlock {
+  padding: 2.5px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    background-color: #d6d6d6;
+  }
+}
+.color {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+}

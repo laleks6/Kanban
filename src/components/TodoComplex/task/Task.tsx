@@ -6,11 +6,12 @@ import {
   changeIndexTaskColumns,
 } from "../../store/kanbanSlice";
 import { type TaskKanban, TypeColumn } from "../../types/baseTypes";
-import { TaskIndexContext } from "../../context/columnContext";
+import { TaskIndexContext } from "../../context/Context";
 import style from "./task.module.scss";
 import Tags from "./tags/Tags";
 import Button from "../../button/Button";
 import dotsIcon from "../../../assets/dots.png";
+import TaskSetting from "./taskSettings/TaskSettings";
 
 type Props = {
   data: TaskKanban;
@@ -30,6 +31,9 @@ function Task({ data, tasks, taskIndex, column, columns }: Props) {
     currentColumnTasks: TaskKanban[];
   }) => dispatch(changeIndexTaskColumns(arr));
   const [changeTask, setChangeTask] = useState(false);
+  const [tagSettings, settagSettings] = useState(false);
+  const [tagsAddModal, setTagsAddModal] = useState(false);
+
   const handleDragStart = (
     e: React.DragEvent<HTMLDivElement>,
     task: TaskKanban,
@@ -106,12 +110,28 @@ function Task({ data, tasks, taskIndex, column, columns }: Props) {
     console.log("delete");
   };
 
-  const cliclChangeTaks = () => {
+  const cliclSettingsTaks = () => {
     setChangeTask(!changeTask);
   };
 
   return (
     <TaskIndexContext.Provider value={taskIndex}>
+      {tagsAddModal && (
+        <div
+          className={style.blockout}
+          onClick={() => setTagsAddModal(!tagsAddModal)}
+          onKeyDown={() => setTagsAddModal(!tagsAddModal)}
+          aria-hidden
+        />
+      )}
+      {tagSettings && (
+        <div
+          className={style.blockout}
+          onClick={() => settagSettings(!tagSettings)}
+          onKeyDown={() => settagSettings(!tagSettings)}
+          aria-hidden
+        />
+      )}
       <div
         className={`blockTask ${style.task}`}
         draggable
@@ -122,15 +142,22 @@ function Task({ data, tasks, taskIndex, column, columns }: Props) {
       >
         <div className={style.taskInfo}>
           <p className={style.taskPrevDescription}> {data.data}</p>
-          <Tags data={data.tags} />
+          <Tags
+            data={data.tags}
+            tagsAddModal={tagsAddModal}
+            setTagsAddModal={setTagsAddModal}
+            tagSettings={tagSettings}
+            settagSettings={settagSettings}
+          />
         </div>
 
         <Button
           className={style.chengeTask}
-          onClick={cliclChangeTaks}
+          onClick={cliclSettingsTaks}
           icon={dotsIcon}
           text=""
         />
+        {changeTask && <TaskSetting />}
       </div>
     </TaskIndexContext.Provider>
   );

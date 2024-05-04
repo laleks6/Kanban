@@ -53,8 +53,8 @@ function SettingsModal({ index, status }: Props) {
         <img src={binIcon} alt="bin-icon" /> <span>Delete</span>
       </div>
       <div className={style.colorsSettingBlock}>
-        {Object.keys(colors).map((el, i) => (
-          <label key={i} className={style.colorsSetting}>
+        {Object.keys(colors).map((el) => (
+          <label key={colors[el]} className={style.colorsSetting}>
             <div className={style.colorBlock}>
               {colors[el] ? (
                 <span
@@ -75,7 +75,7 @@ function SettingsModal({ index, status }: Props) {
               name={`radio_${index}`}
               onChange={(e) => onChangeRadioBtn(e, colors[el])}
             />
-            <span className={style.newChecbox}></span>
+            <span className={style.newChecbox} />
           </label>
         ))}
       </div>
