@@ -10,7 +10,7 @@ import { type TypeColumn } from "../../types/baseTypes";
 import Button from "../../button/Button";
 import style from "./createColumn.module.scss";
 import Task from "../task/Task";
-import AddTask from "./addTask/AddTask";
+import AddTask from "../addTask/AddTask";
 import dots from "../../../assets/dots.png";
 import SettingsModal from "./settingsModal/SettingsModal";
 import { ColumnIndexContext } from "../../context/Context";
@@ -20,7 +20,7 @@ type Props = {
   inedex: number;
   columns: TypeColumn[];
 };
-function CreateColumn({ column, inedex, columns }: Props) {
+function Column({ column, inedex, columns }: Props) {
   const status = useAppSelector((state) => state.kanban.columns[inedex].status);
   const tasks = useAppSelector((state) => state.kanban.columns[inedex].tasks);
   const colorTitle = useAppSelector(
@@ -183,4 +183,4 @@ function CreateColumn({ column, inedex, columns }: Props) {
   );
 }
 
-export default CreateColumn;
+export default Column;

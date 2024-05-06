@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "../../../hook/hook";
-import { addTask } from "../../../store/kanbanSlice";
-import Button from "../../../button/Button";
+import { useAppDispatch } from "../../hook/hook";
+import { addTask } from "../../store/kanbanSlice";
+import Button from "../../button/Button";
 import style from "./addTask.module.scss";
 
 type Props = { columnInedex: number };

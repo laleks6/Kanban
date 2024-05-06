@@ -5,43 +5,39 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { useAppDispatch, useAppSelector } from "../../../hook/hook";
+import { useAppDispatch, useAppSelector } from "../../hook/hook";
 import style from "./style.module.scss";
-import Button from "../../../button/Button";
-import TagAddModal from "./tagModal/TagModal";
-import { type TypeTag } from "../../../types/baseTypes";
+import Button from "../../button/Button";
+import AddTag from "./addTag/AddTag";
+import { type TypeTag } from "../../types/baseTypes";
 import TagSettings from "./tagSettings/TagSettings";
 import Tag from "./tag/Tag";
-import { ColumnIndexContext, TaskIndexContext } from "../../../context/Context";
-import { removeTag } from "../../../store/kanbanSlice";
+import {
+  ActiveModalContext,
+  ColumnIndexContext,
+  TaskIndexContext,
+} from "../../context/Context";
+import { removeTag } from "../../store/kanbanSlice";
 
 type Props = {
   data: TypeTag[];
   tagsAddModal: boolean;
   setTagsAddModal: Dispatch<SetStateAction<boolean>>;
-  tagSettings: boolean;
-  settagSettings: Dispatch<SetStateAction<boolean>>;
 };
-function Tags({
-  data,
-  tagsAddModal,
-  setTagsAddModal,
-  tagSettings,
-  settagSettings,
-}: Props) {
+function Tags({ data, tagsAddModal, setTagsAddModal }: Props) {
   console.log(data, "RENDERING TAGS BLOCK");
   const [value, setValue] = useState("");
   const [tagPaint, setTagPaint] = useState(false);
   const [bgColor, setBgColor] = useState("#6a6a6a");
   const [textColor, setTextColor] = useState("#c5c5c5");
   const [targetTag, setTargetTag] = useState<TypeTag | null>(null);
+  const [tagSettings, settagSettings] = useState(false);
+  const [tagsAddSettings, setTagsAddSettings] = useState(false);
   const columnIndex = useContext(ColumnIndexContext);
   const taskIndex = useContext(TaskIndexContext);
-  const globalTags = useAppSelector((state) => state.globalTask.tags);
+  const modalContext = useContext(ActiveModalContext);
   const deleteTag = useAppSelector((state) => state.globalTask.deleteTag);
   const dispatch = useAppDispatch();
-  const deleteTagDispatch = (obj: Record<string, number | string>) =>
-    dispatch(removeTag(obj));
 
   const onClickBtnAddTag = () => {
     setTagsAddModal(!tagsAddModal);
@@ -49,12 +45,17 @@ function Tags({
     setValue("");
     setBgColor("#6a6a6a");
     setTextColor("#c5c5c5");
+    modalContext?.setModalActive(true);
+    setTagsAddSettings(true);
   };
   const onClickTag = (el: TypeTag) => {
-    settagSettings(!tagSettings);
+    settagSettings(true);
     setTargetTag(el);
+    modalContext?.setModalActive(true);
   };
   useEffect(() => {
+    const deleteTagDispatch = (obj: Record<string, number | string>) =>
+      dispatch(removeTag(obj));
     const checkTags = () => {
       data.forEach((el, i) => {
         if (deleteTag[0]) {
@@ -65,7 +66,13 @@ function Tags({
       });
     };
     checkTags();
-  }, [columnIndex, data, deleteTag, deleteTagDispatch, taskIndex]);
+  }, [columnIndex, data, deleteTag, dispatch, taskIndex]);
+  useEffect(() => {
+    if (!modalContext?.modalActive) {
+      settagSettings(false);
+      setTagsAddSettings(false);
+    }
+  }, [modalContext]);
   return (
     <div className={style.tagsBlock}>
       {data &&
@@ -94,19 +101,19 @@ function Tags({
         />
         {!data[0] && <span className={style.textAddTeg}>add tag</span>}
       </div>
-
-      <TagAddModal
-        status={tagsAddModal}
-        setStatus={setTagsAddModal}
-        value={value}
-        setValue={setValue}
-        tagPaint={tagPaint}
-        setTagPaint={setTagPaint}
-        bgColor={bgColor}
-        setBgColor={setBgColor}
-        textColor={textColor}
-        setTextColor={setTextColor}
-      />
+      {tagsAddSettings && (
+        <AddTag
+          value={value}
+          setValue={setValue}
+          tagPaint={tagPaint}
+          setTagPaint={setTagPaint}
+          bgColor={bgColor}
+          setBgColor={setBgColor}
+          textColor={textColor}
+          setTextColor={setTextColor}
+          setTagsAddSettings={setTagsAddSettings}
+        />
+      )}
     </div>
   );
 }

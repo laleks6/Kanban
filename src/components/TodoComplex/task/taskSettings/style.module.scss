@@ -1,7 +1,9 @@
 .setting {
   position: absolute;
   width: 300px;
-  height: 300px;
-  background-color: red;
+  min-height: 300px;
+  top: calc(50% - 150px);
+  right: calc(50% - 150px);
+  border: 2px solid black;
   z-index: 4;
 }

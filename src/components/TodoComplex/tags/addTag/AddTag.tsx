@@ -1,20 +1,18 @@
-import React, { useState, useContext, Dispatch, SetStateAction } from "react";
+import React, { useContext, Dispatch, SetStateAction } from "react";
 import style from "./style.module.scss";
-import Button from "../../../../button/Button";
-import { useAppDispatch, useAppSelector } from "../../../../hook/hook";
+import { useAppDispatch, useAppSelector } from "../../../hook/hook";
 import {
+  ActiveModalContext,
   ColumnIndexContext,
   TaskIndexContext,
-} from "../../../../context/Context";
-import { addGlobalTag } from "../../../../store/globalTaskSlice";
-import { addTaskTag, removeTag } from "../../../../store/kanbanSlice";
-import { Tag, ColumnTag } from "../../../../types/baseTypes";
-import iconPaint from "../../../../../assets/icons-color.png";
-import PaintTag from "./tagColor/PaintTag";
+} from "../../../context/Context";
+import { addGlobalTag } from "../../../store/globalTaskSlice";
+import { addTaskTag, removeTag } from "../../../store/kanbanSlice";
+import { TypeTag, ColumnTag } from "../../../types/baseTypes";
+import iconPaint from "../../../../assets/icons-color.png";
+import PaintTag from "../../paint/PaintTag";
 
 type Props = {
-  status: boolean;
-  setStatus: Dispatch<SetStateAction<boolean>>;
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
   tagPaint: boolean;
@@ -23,11 +21,10 @@ type Props = {
   setBgColor: Dispatch<SetStateAction<string>>;
   textColor: string;
   setTextColor: Dispatch<SetStateAction<string>>;
+  setTagsAddSettings: Dispatch<SetStateAction<boolean>>;
 };
 
-function TagAddModal({
-  status,
-  setStatus,
+function AddTag({
   value,
   setValue,
   tagPaint,
@@ -36,13 +33,15 @@ function TagAddModal({
   setBgColor,
   textColor,
   setTextColor,
+  setTagsAddSettings,
 }: Props) {
   const dispatch = useAppDispatch();
-  const dispatchAddGlobalTag = (tag: Tag) => dispatch(addGlobalTag(tag));
+  const dispatchAddGlobalTag = (tag: TypeTag) => dispatch(addGlobalTag(tag));
   const dispatchAddColumnTag = (tag: ColumnTag) => dispatch(addTaskTag(tag));
   const dispatchRemoveColumnTag = (tag: ColumnTag) => dispatch(removeTag(tag));
   const columnIndex = useContext(ColumnIndexContext);
   const taskIndex = useContext(TaskIndexContext);
+  const modalContext = useContext(ActiveModalContext);
   const tagsGlobal = useAppSelector((state) => state.globalTask.tags);
   const tagsTask = useAppSelector(
     (state) => state.kanban.columns[columnIndex].tasks[taskIndex].tags
@@ -64,10 +63,11 @@ function TagAddModal({
           taskIndex,
           tag: creteObjTask(),
         });
-        setStatus(!status);
+        setTagsAddSettings(false);
         setValue("");
         setBgColor("#6a6a6a");
         setTextColor("#c5c5c5");
+        modalContext?.setModalActive(false);
       }
     }
   };
@@ -79,14 +79,15 @@ function TagAddModal({
       taskIndex,
       tag: creteObjTask(),
     });
-    setStatus(!status);
+    setTagsAddSettings(false);
     setValue("");
     setBgColor("#6a6a6a");
     setTextColor("#c5c5c5");
+    modalContext?.setModalActive(false);
   };
   const onClickTag = (status, el) => {
     if (status) {
-      const tag = tagsTask.find((tagTask: Tag) => tagTask.id === el.id);
+      const tag = tagsTask.find((tagTask: TypeTag) => tagTask.id === el.id);
       let tagIndex = -1;
       if (tag) tagIndex = tagsTask.indexOf(tag);
       dispatchRemoveColumnTag({ columnIndex, taskIndex, tagIndex });
@@ -96,7 +97,7 @@ function TagAddModal({
   };
 
   return (
-    <div className={` ${style.tagModal} ${status ? style.modalActive : ""} `}>
+    <div className={` ${style.tagModal} ${style.modalActive} `}>
       <input
         value={value}
         placeholder="Create tag"
@@ -164,4 +165,4 @@ function TagAddModal({
   );
 }
 
-export default TagAddModal;
+export default AddTag;

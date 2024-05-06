@@ -1,19 +1,20 @@
 import React, { useState, useContext, Dispatch, SetStateAction } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../hook/hook";
-import { removeTag, changeColorTag } from "../../../../store/kanbanSlice";
+import { useAppDispatch, useAppSelector } from "../../../hook/hook";
+import { removeTag, changeColorTag } from "../../../store/kanbanSlice";
 import {
   changeColorGlobalTag,
   deleteTag,
-} from "../../../../store/globalTaskSlice";
+} from "../../../store/globalTaskSlice";
 import {
+  ActiveModalContext,
   ColumnIndexContext,
   TaskIndexContext,
-} from "../../../../context/Context";
+} from "../../../context/Context";
 import style from "./style.module.scss";
-import PaintTag from "../tagModal/tagColor/PaintTag";
-import { TypeTag } from "../../../../types/baseTypes";
-import removeIcon from "../../../../../assets/icons8-remove.png";
-import deleteIcon from "../../../../../assets/recycle-bin.png";
+import PaintTag from "../../paint/PaintTag";
+import { TypeTag } from "../../../types/baseTypes";
+import removeIcon from "../../../../assets/icons8-remove.png";
+import deleteIcon from "../../../../assets/recycle-bin.png";
 
 type Props = {
   targetTag: TypeTag | null;
@@ -24,6 +25,7 @@ type Props = {
 function TagSettings({ targetTag, setTargetTag, settagSettings }: Props) {
   const columnIndex = useContext(ColumnIndexContext);
   const taskIndex = useContext(TaskIndexContext);
+  const modalContext = useContext(ActiveModalContext);
   const tagsTask = useAppSelector(
     (state) => state.kanban.columns[columnIndex].tasks[taskIndex].tags
   );
@@ -56,6 +58,7 @@ function TagSettings({ targetTag, setTargetTag, settagSettings }: Props) {
     removeDispatch({ columnIndex, taskIndex, tagIndex });
     setTargetTag(null);
     settagSettings(false);
+    modalContext?.setModalActive(false);
     console.log(targetTag, geteIndex(tagsTask, targetTag), "TARGET INDEX");
   };
   const onClickDelete = () => {
@@ -63,6 +66,7 @@ function TagSettings({ targetTag, setTargetTag, settagSettings }: Props) {
     deleteGlobalDispatch(tagIndex);
     setTargetTag(null);
     settagSettings(false);
+    modalContext?.setModalActive(false);
     console.log(
       targetTag,
       geteIndex(tagsTask, targetTag),

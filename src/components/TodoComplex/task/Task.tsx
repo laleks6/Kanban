@@ -1,17 +1,20 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useAppDispatch } from "../../hook/hook";
 import {
   changeIndexTask,
   changeIndexTaskColumns,
 } from "../../store/kanbanSlice";
 import { type TaskKanban, TypeColumn } from "../../types/baseTypes";
-import { TaskIndexContext } from "../../context/Context";
+import {
+  TaskIndexContext,
+  ActiveModalContext,
+  TaskSettingsContext,
+} from "../../context/Context";
 import style from "./task.module.scss";
-import Tags from "./tags/Tags";
+import Tags from "../tags/Tags";
 import Button from "../../button/Button";
 import dotsIcon from "../../../assets/dots.png";
-import TaskSetting from "./taskSettings/TaskSettings";
 
 type Props = {
   data: TaskKanban;
@@ -21,6 +24,8 @@ type Props = {
   columns: TypeColumn[];
 };
 function Task({ data, tasks, taskIndex, column, columns }: Props) {
+  const modalContext = useContext(ActiveModalContext);
+  const taskSettingsContext = useContext(TaskSettingsContext);
   const dispatch = useAppDispatch();
   const changeTasks = (arr: { index: number; tasks: TaskKanban[] }) =>
     dispatch(changeIndexTask(arr));
@@ -111,12 +116,13 @@ function Task({ data, tasks, taskIndex, column, columns }: Props) {
   };
 
   const cliclSettingsTaks = () => {
-    setChangeTask(!changeTask);
+    taskSettingsContext?.setTaskSettings(!taskSettingsContext.taskSettings);
+    modalContext?.setModalActive(!modalContext.modalActive);
   };
 
   return (
     <TaskIndexContext.Provider value={taskIndex}>
-      {tagsAddModal && (
+      {/* {tagsAddModal && (
         <div
           className={style.blockout}
           onClick={() => setTagsAddModal(!tagsAddModal)}
@@ -131,7 +137,7 @@ function Task({ data, tasks, taskIndex, column, columns }: Props) {
           onKeyDown={() => settagSettings(!tagSettings)}
           aria-hidden
         />
-      )}
+      )} */}
       <div
         className={`blockTask ${style.task}`}
         draggable
@@ -146,8 +152,6 @@ function Task({ data, tasks, taskIndex, column, columns }: Props) {
             data={data.tags}
             tagsAddModal={tagsAddModal}
             setTagsAddModal={setTagsAddModal}
-            tagSettings={tagSettings}
-            settagSettings={settagSettings}
           />
         </div>
 
@@ -157,7 +161,6 @@ function Task({ data, tasks, taskIndex, column, columns }: Props) {
           icon={dotsIcon}
           text=""
         />
-        {changeTask && <TaskSetting />}
       </div>
     </TaskIndexContext.Provider>
   );

@@ -1,12 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import style from "../style.module.scss";
-import { type TypeTag } from "../../../../types/baseTypes";
-import { useAppSelector, useAppDispatch } from "../../../../hook/hook";
-import { changeColorTag, removeTag } from "../../../../store/kanbanSlice";
-import {
-  ColumnIndexContext,
-  TaskIndexContext,
-} from "../../../../context/Context";
+import { type TypeTag } from "../../../types/baseTypes";
+import { useAppSelector, useAppDispatch } from "../../../hook/hook";
+import { changeColorTag } from "../../../store/kanbanSlice";
+import { ColumnIndexContext, TaskIndexContext } from "../../../context/Context";
 
 type Props = {
   data: TypeTag;
