@@ -12,8 +12,8 @@ const kanbanSlice = createSlice({
         status: "beforeCreate",
         color: "",
         tasks: [
-          { id: 1, order: 0, data: 1, tags: [], description: "" },
-          { id: 2, order: 1, data: 2, tags: [], description: "" },
+          { id: 1, order: 0, data: 1, tags: [], description: [] },
+          { id: 2, order: 1, data: 2, tags: [], description: [] },
         ],
       },
     ],
@@ -60,9 +60,15 @@ const kanbanSlice = createSlice({
         order: state.columns[action.payload.index].tasks.length,
         data: action.payload.task,
         tags: [],
-        description: "",
+        description: [],
       });
     },
+    deleteTask(state, action) {
+      console.log("Delete", action.payload);
+      const { indexColumn, indexTask } = action.payload;
+      state.columns[indexColumn].tasks.splice(indexTask, 1);
+    },
+
     changeIndexTask(state, action) {
       console.log("CHANGE", action.payload);
       state.columns[action.payload.index].tasks = action.payload.tasks;
@@ -90,6 +96,35 @@ const kanbanSlice = createSlice({
     changeBackgroundColorTitle(state, action) {
       // dropColumnIndex, currentColumnInde
       state.columns[action.payload.index].color = action.payload.color;
+    },
+    changeTaskTitile(state, action) {
+      const { indexColumn, indexTask, value } = action.payload;
+      console.log(action.payload, "changeTaskTitile");
+      state.columns[indexColumn].tasks[indexTask].data = value;
+    },
+    addDescriptionTask(state, action) {
+      const { indexColumn, indexTask, descriptionValue } = action.payload;
+      console.log(action.payload, "changeTaskTitile");
+      state.columns[indexColumn].tasks[indexTask].description.push({
+        id: Date.now(),
+        data: descriptionValue,
+      });
+    },
+    deleteDescriptionTask(state, action) {
+      const { indexColumn, indexTask, indexDescription } = action.payload;
+      console.log(action.payload, "changeTaskTitile");
+      state.columns[indexColumn].tasks[indexTask].description.splice(
+        indexDescription,
+        1
+      );
+    },
+    changeDescriptionTask(state, action) {
+      const { indexColumn, indexTask, indexDescription, value } =
+        action.payload;
+      console.log(action.payload, "changeTaskDEscription");
+      state.columns[indexColumn].tasks[indexTask].description[
+        indexDescription
+      ].data = value;
     },
     addTaskTag(state, action: PayloadAction<ColumnTag>) {
       console.log(action.payload, "TAG");
@@ -121,11 +156,16 @@ export const {
   reorder,
   changeSatus,
   addTask,
+  deleteTask,
   changeIndexTask,
   changeIndexTaskColumns,
   changeIndexColumns,
   changeBackgroundColorTitle,
   removeColumn,
+  changeTaskTitile,
+  addDescriptionTask,
+  deleteDescriptionTask,
+  changeDescriptionTask,
   addTaskTag,
   removeTag,
   changeColorTag,

@@ -4,17 +4,20 @@ import { useAppDispatch } from "../../hook/hook";
 import {
   changeIndexTask,
   changeIndexTaskColumns,
+  changeTaskTitile,
 } from "../../store/kanbanSlice";
 import { type TaskKanban, TypeColumn } from "../../types/baseTypes";
 import {
   TaskIndexContext,
   ActiveModalContext,
   TaskSettingsContext,
+  ColumnIndexContext,
 } from "../../context/Context";
 import style from "./task.module.scss";
 import Tags from "../tags/Tags";
 import Button from "../../button/Button";
 import dotsIcon from "../../../assets/dots.png";
+import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 
 type Props = {
   data: TaskKanban;
@@ -26,6 +29,7 @@ type Props = {
 function Task({ data, tasks, taskIndex, column, columns }: Props) {
   const modalContext = useContext(ActiveModalContext);
   const taskSettingsContext = useContext(TaskSettingsContext);
+  const columnIndexConttext = useContext(ColumnIndexContext);
   const dispatch = useAppDispatch();
   const changeTasks = (arr: { index: number; tasks: TaskKanban[] }) =>
     dispatch(changeIndexTask(arr));
@@ -35,10 +39,9 @@ function Task({ data, tasks, taskIndex, column, columns }: Props) {
     currentColumnIndex: number;
     currentColumnTasks: TaskKanban[];
   }) => dispatch(changeIndexTaskColumns(arr));
-  const [changeTask, setChangeTask] = useState(false);
-  const [tagSettings, settagSettings] = useState(false);
   const [tagsAddModal, setTagsAddModal] = useState(false);
-
+  const chengeTitleTaskDispatch = (obj: Record<string, number | string>) =>
+    dispatch(changeTaskTitile(obj));
   const handleDragStart = (
     e: React.DragEvent<HTMLDivElement>,
     task: TaskKanban,
@@ -114,30 +117,28 @@ function Task({ data, tasks, taskIndex, column, columns }: Props) {
     }
     console.log("delete");
   };
+  const changeTitle = (e: ContentEditableEvent) => {
+    const { value } = e.target;
+
+    chengeTitleTaskDispatch({
+      indexColumn: columnIndexConttext,
+      indexTask: taskIndex,
+      value,
+    });
+    // setTitileValue(e.target.value);
+  };
 
   const cliclSettingsTaks = () => {
-    taskSettingsContext?.setTaskSettings(!taskSettingsContext.taskSettings);
-    modalContext?.setModalActive(!modalContext.modalActive);
+    taskSettingsContext?.setTaskSettings(true);
+    modalContext?.setModalActive(true);
+    taskSettingsContext?.setIndices({
+      indexColumn: columnIndexConttext,
+      indexTask: taskIndex,
+    });
   };
 
   return (
     <TaskIndexContext.Provider value={taskIndex}>
-      {/* {tagsAddModal && (
-        <div
-          className={style.blockout}
-          onClick={() => setTagsAddModal(!tagsAddModal)}
-          onKeyDown={() => setTagsAddModal(!tagsAddModal)}
-          aria-hidden
-        />
-      )}
-      {tagSettings && (
-        <div
-          className={style.blockout}
-          onClick={() => settagSettings(!tagSettings)}
-          onKeyDown={() => settagSettings(!tagSettings)}
-          aria-hidden
-        />
-      )} */}
       <div
         className={`blockTask ${style.task}`}
         draggable
@@ -147,7 +148,11 @@ function Task({ data, tasks, taskIndex, column, columns }: Props) {
         onDrop={(e) => handleDrop(e, data, column, columns)}
       >
         <div className={style.taskInfo}>
-          <p className={style.taskPrevDescription}> {data.data}</p>
+          <ContentEditable
+            className={style.taskPrevDescription}
+            onChange={(e) => changeTitle(e)}
+            html={`${data.data}`}
+          />
           <Tags
             data={data.tags}
             tagsAddModal={tagsAddModal}

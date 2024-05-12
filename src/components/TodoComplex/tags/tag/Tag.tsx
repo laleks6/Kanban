@@ -41,25 +41,7 @@ function Tag({ data, onClickTag, index, targetTag }: Props) {
         }
       });
     };
-
-    // const checkHaveTag = () => {
-    //   if (deleteTag[0]) {
-    //     if (data.id === deleteTag[0].id) {
-    //       console.log(
-    //         datas,
-    //         data,
-    //         deleteTag[0],
-    //         columnIndex,
-    //         taskIndex,
-    //         index,
-    //         "AAAAAAAAAAAAAAAAAAAAAAAAAA DDDD"
-    //       );
-    //       deleteTagDispatch({ columnIndex, taskIndex, index });
-    //     }
-    //   }
-    // };
     checkColorTags();
-    // checkHaveTag();
   }, [columnIndex, data, deleteTag, dispatch, globalTags, index, taskIndex]);
 
   return (

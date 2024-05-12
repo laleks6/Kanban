@@ -11,6 +11,7 @@ import { addTaskTag, removeTag } from "../../../store/kanbanSlice";
 import { TypeTag, ColumnTag } from "../../../types/baseTypes";
 import iconPaint from "../../../../assets/icons-color.png";
 import PaintTag from "../../paint/PaintTag";
+import GLobalTags from "../globalTags/GlobalTags";
 
 type Props = {
   value: string;
@@ -38,14 +39,14 @@ function AddTag({
   const dispatch = useAppDispatch();
   const dispatchAddGlobalTag = (tag: TypeTag) => dispatch(addGlobalTag(tag));
   const dispatchAddColumnTag = (tag: ColumnTag) => dispatch(addTaskTag(tag));
-  const dispatchRemoveColumnTag = (tag: ColumnTag) => dispatch(removeTag(tag));
+  // const dispatchRemoveColumnTag = (tag: ColumnTag) => dispatch(removeTag(tag));
   const columnIndex = useContext(ColumnIndexContext);
   const taskIndex = useContext(TaskIndexContext);
   const modalContext = useContext(ActiveModalContext);
   const tagsGlobal = useAppSelector((state) => state.globalTask.tags);
-  const tagsTask = useAppSelector(
-    (state) => state.kanban.columns[columnIndex].tasks[taskIndex].tags
-  );
+  // const tagsTask = useAppSelector(
+  //   (state) => state.kanban.columns[columnIndex].tasks[taskIndex].tags
+  // );
   const filterTagGlobal = tagsGlobal.filter((el) => el.value === value);
   const idTag = Date.now();
   const creteObjTask = () => {
@@ -84,16 +85,6 @@ function AddTag({
     setBgColor("#6a6a6a");
     setTextColor("#c5c5c5");
     modalContext?.setModalActive(false);
-  };
-  const onClickTag = (status, el) => {
-    if (status) {
-      const tag = tagsTask.find((tagTask: TypeTag) => tagTask.id === el.id);
-      let tagIndex = -1;
-      if (tag) tagIndex = tagsTask.indexOf(tag);
-      dispatchRemoveColumnTag({ columnIndex, taskIndex, tagIndex });
-    } else {
-      dispatchAddColumnTag({ columnIndex, taskIndex, tag: el });
-    }
   };
 
   return (
@@ -137,28 +128,8 @@ function AddTag({
             )}
           </div>
         )}
-        {tagsGlobal && (
-          <div className={style.allTagsBlock}>
-            {tagsGlobal.map((el, i) => {
-              const checkHaveTagTask = tagsTask.filter(
-                (elTask) => elTask.id === el.id
-              );
-              return (
-                <button
-                  key={el.id}
-                  style={{ backgroundColor: el.bgColor, color: el.textColor }}
-                  className={style.tag}
-                  onClick={() => onClickTag(checkHaveTagTask[0], el, i)}
-                  type="button"
-                >
-                  {el.value}
-                  <span
-                    className={checkHaveTagTask[0] ? style.haveTagCheck : ""}
-                  />
-                </button>
-              );
-            })}
-          </div>
+        {tagsGlobal[0] && (
+          <GLobalTags columnIndex={columnIndex} taskIndex={taskIndex} />
         )}
       </div>
     </div>

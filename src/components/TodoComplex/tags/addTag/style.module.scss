@@ -34,13 +34,7 @@
 .beforeCreateTag {
   position: relative;
 }
-.allTagsBlock {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  height: auto;
-  gap: 5px;
-}
+
 .tag {
   outline: none;
   border: none;
@@ -49,15 +43,6 @@
   cursor: pointer;
 }
 
-.haveTagCheck {
-  margin-left: 5px;
-  &::after {
-    /* <-- ставим иконку, когда чекбокс включен  */
-    content: "\2714";
-    font-size: 0.7rem;
-    color: #fdfdfd;
-  }
-}
 .createTag {
   display: flex;
   align-items: center;

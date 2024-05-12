@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type TaskKanban = {
   id: number;
   order: number;
@@ -26,8 +28,28 @@ export type TypeTag = {
   bgColor: string;
   textColor: string;
 };
+
 export type ColumnTag = {
   columnIndex: number;
   taskIndex: number;
   tag: TypeTag;
+};
+
+export type TypeindexContext = number;
+
+export type TypeActiveModalContext = {
+  modalActive: boolean;
+  setModalActive: Dispatch<SetStateAction<boolean>>;
+};
+
+export type TypeTaskDataContext = {
+  indexColumn: TypeindexContext;
+  indexTask: TypeindexContext;
+};
+
+export type TypeTaskSettingsContext = {
+  taskSettings: boolean;
+  setTaskSettings: Dispatch<SetStateAction<boolean>>;
+  indices: TypeTaskDataContext | null;
+  setIndices: Dispatch<SetStateAction<TypeTaskDataContext | null>>;
 };
