@@ -1,23 +1,28 @@
+/* eslint-disable prettier/prettier */
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ColumnTag, Tag } from "../types/baseTypes";
+import { ColumnTag, TypeColumn } from "../types/baseTypes";
 /* eslint-disable no-param-reassign */
+type Columns = {
+  columns: TypeColumn[];
+};
+const initialState: Columns = {
+  columns: [
+    {
+      id: Date.now(),
+      order: 0,
+      name: "+ Create column",
+      status: "beforeCreate",
+      color: { bgColor: "", textColor: "" },
+      tasks: [
+        { id: 1, order: 0, data: 1, tags: [], description: [] },
+        { id: 2, order: 1, data: 2, tags: [], description: [] },
+      ],
+    },
+  ],
+};
 const kanbanSlice = createSlice({
   name: "kanban",
-  initialState: {
-    columns: [
-      {
-        id: Date.now(),
-        order: 0,
-        name: "+ Create column",
-        status: "beforeCreate",
-        color: "",
-        tasks: [
-          { id: 1, order: 0, data: 1, tags: [], description: [] },
-          { id: 2, order: 1, data: 2, tags: [], description: [] },
-        ],
-      },
-    ],
-  },
+  initialState,
   reducers: {
     createTabel(state) {
       console.log("createtable");
@@ -26,7 +31,7 @@ const kanbanSlice = createSlice({
         name: "+ Create column",
         order: state.columns.length,
         status: "beforeCreate",
-        color: "",
+        color: { bgColor: "", textColor: "#0000" },
         tasks: [],
       });
     },
@@ -50,11 +55,6 @@ const kanbanSlice = createSlice({
       tabel!.status = action.payload.status;
     },
     addTask(state, action) {
-      console.log(
-        "addtask dispatch",
-        action.payload,
-        state.columns[action.payload.index].tasks.length
-      );
       state.columns[action.payload.index].tasks.push({
         id: Date.now(),
         order: state.columns[action.payload.index].tasks.length,
@@ -75,13 +75,6 @@ const kanbanSlice = createSlice({
     },
     changeIndexTaskColumns(state, action) {
       // dropColumnIndex, newArrTask, currentColumnIndex, currentColumnTasks
-      console.log(
-        "CHANGE",
-        action.payload.dropColumnIndex,
-        action.payload.newArrTasks,
-        action.payload.currentColumnIndex,
-        action.payload.currentColumnTasks
-      );
 
       state.columns[action.payload.dropColumnIndex].tasks =
         action.payload.newArrTasks;
@@ -95,7 +88,10 @@ const kanbanSlice = createSlice({
     },
     changeBackgroundColorTitle(state, action) {
       // dropColumnIndex, currentColumnInde
-      state.columns[action.payload.index].color = action.payload.color;
+      state.columns[action.payload.index].color.bgColor =
+        action.payload.bgColor;
+      state.columns[action.payload.index].color.textColor =
+        action.payload.textColor;
     },
     changeTaskTitile(state, action) {
       const { indexColumn, indexTask, value } = action.payload;

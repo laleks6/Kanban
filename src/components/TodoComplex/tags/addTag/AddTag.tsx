@@ -7,7 +7,7 @@ import {
   TaskIndexContext,
 } from "../../../context/Context";
 import { addGlobalTag } from "../../../store/globalTaskSlice";
-import { addTaskTag, removeTag } from "../../../store/kanbanSlice";
+import { addTaskTag } from "../../../store/kanbanSlice";
 import { TypeTag, ColumnTag } from "../../../types/baseTypes";
 import iconPaint from "../../../../assets/icons-color.png";
 import PaintTag from "../../paint/PaintTag";

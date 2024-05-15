@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useAppDispatch } from "../../hook/hook";
 import { addTask } from "../../store/kanbanSlice";
-import Button from "../../button/Button";
 import style from "./addTask.module.scss";
 
 type Props = { columnInedex: number };
@@ -40,8 +39,16 @@ function AddTask({ columnInedex }: Props) {
       />
       {status && (
         <div className={style.blockBtn}>
-          <Button className={style.button} text="add+" onClick={clickAddBtn} />
-          <Button className={style.button} text="x" onClick={clickCloseBtn} />
+          <button type="button" className={style.button} onClick={clickAddBtn}>
+            add+
+          </button>
+          <button
+            type="button"
+            className={style.button}
+            onClick={clickCloseBtn}
+          >
+            x
+          </button>
         </div>
       )}
     </div>

@@ -4,15 +4,19 @@ export type TaskKanban = {
   id: number;
   order: number;
   data: number;
-  tags: never[];
-  description: string;
+  tags: TypeTag[];
+  description: DescriptionKanban[];
 };
-
+export type DescriptionKanban = {
+  id: number;
+  data: string[];
+};
 export type TypeColumn = {
   id: number;
   order: number;
   name: string;
   status: string;
+  color: Color;
   tasks: TaskKanban[];
 };
 
@@ -33,6 +37,10 @@ export type ColumnTag = {
   columnIndex: number;
   taskIndex: number;
   tag: TypeTag;
+};
+export type Color = {
+  bgColor: string;
+  textColor: string;
 };
 
 export type TypeindexContext = number;

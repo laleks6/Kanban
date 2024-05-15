@@ -1,9 +1,9 @@
-import React, { useContext, Dispatch, SetStateAction } from "react";
+import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../hook/hook";
-import { ColumnIndexContext, TaskIndexContext } from "../../../context/Context";
 import { ColumnTag, TypeTag } from "../../../types/baseTypes";
 import { addTaskTag, removeTag } from "../../../store/kanbanSlice";
 import style from "./style.module.scss";
+
 type Props = Record<string, number>;
 function GLobalTags({ columnIndex, taskIndex }: Props) {
   const tagsGlobal = useAppSelector((state) => state.globalTask.tags);
@@ -15,7 +15,7 @@ function GLobalTags({ columnIndex, taskIndex }: Props) {
   const dispatchRemoveColumnTag = (tag: Record<string, number>) =>
     dispatch(removeTag(tag));
 
-  const onClickTag = (status, el) => {
+  const onClickTag = (status: TypeTag, el: TypeTag) => {
     if (status) {
       const tag = tagsTask.find((tagTask: TypeTag) => tagTask.id === el.id);
       let tagIndex = -1;
@@ -27,16 +27,16 @@ function GLobalTags({ columnIndex, taskIndex }: Props) {
   };
   return (
     <div className={style.allTagsBlock}>
-      {tagsGlobal.map((el, i) => {
-        const checkHaveTagTask = tagsTask.filter(
-          (elTask) => elTask.id === el.id
-        );
+      {tagsGlobal.map((el) => {
+        const checkHaveTagTask = tagsTask.filter((elTask) => {
+          return elTask.id === el.id;
+        });
         return (
           <button
             key={el.id}
             style={{ backgroundColor: el.bgColor, color: el.textColor }}
             className={style.tag}
-            onClick={() => onClickTag(checkHaveTagTask[0], el, i)}
+            onClick={() => onClickTag(checkHaveTagTask[0], el)}
             type="button"
           >
             {el.value}
@@ -49,10 +49,3 @@ function GLobalTags({ columnIndex, taskIndex }: Props) {
 }
 
 export default GLobalTags;
-function dispatchRemoveColumnTag(arg0: {
-  columnIndex: any;
-  taskIndex: any;
-  tagIndex: number;
-}) {
-  throw new Error("Function not implemented.");
-}

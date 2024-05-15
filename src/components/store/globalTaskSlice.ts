@@ -1,10 +1,10 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Tag, TaskTodo } from "../types/baseTypes";
+import { createSlice } from "@reduxjs/toolkit";
+import { TypeTag, TaskTodo } from "../types/baseTypes";
 /* eslint-disable no-param-reassign */
 type TodosState = {
   todos: TaskTodo[];
-  tags: Tag[];
-  deleteTag: Tag[];
+  tags: TypeTag[];
+  deleteTag: TypeTag[];
 };
 const initialState: TodosState = {
   todos: [],

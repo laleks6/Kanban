@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useContext, useState } from "react";
+import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 import { useAppDispatch } from "../../hook/hook";
 import {
   changeIndexTask,
@@ -17,7 +18,6 @@ import style from "./task.module.scss";
 import Tags from "../tags/Tags";
 import Button from "../../button/Button";
 import dotsIcon from "../../../assets/dots.png";
-import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 
 type Props = {
   data: TaskKanban;

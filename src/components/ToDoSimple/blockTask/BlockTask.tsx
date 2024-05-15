@@ -37,6 +37,7 @@ function BlockTask({ tasks }: Props) {
             <span className={style.text}>{el.discription}</span>
           </label>
           <button
+            type="button"
             className={style.button}
             onClick={() => dispatch(deleteTodo(el.id))}
           >

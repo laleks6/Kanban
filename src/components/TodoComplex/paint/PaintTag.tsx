@@ -1,8 +1,6 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../../hook/hook";
-import stylePaint from "./style.module.scss";
-import { color } from "framer-motion";
+import React, { Dispatch, SetStateAction } from "react";
 import style from "./style.module.scss";
+import noneIcon from "../../../assets/none_icon.png";
 
 type Props = {
   styleModification: string;
@@ -30,24 +28,34 @@ function PaintTag({ styleModification, setBgColor, setTextColor }: Props) {
     setTextColor(el.color);
     console.log("COLOR");
   };
+  const onClickNoneColor = () => {
+    setBgColor("");
+    setTextColor("");
+  };
   return (
-    <div
-      className={`${style.paint} ${styleModification ? styleModification : ""}`}
-    >
+    <div className={`${style.paint} ${styleModification}`}>
       {arr.map((el) => (
         <div
           key={el.bgColor}
-          className={stylePaint.colorBlock}
+          className={style.colorBlock}
           onClick={() => onClickColor(el)}
           onKeyDown={() => onClickColor(el)}
           aria-hidden
         >
           <div
-            className={stylePaint.color}
+            className={style.color}
             style={{ backgroundColor: el.bgColor }}
           />
         </div>
       ))}
+      <div
+        className={style.noneBlock}
+        onClick={() => onClickNoneColor()}
+        onKeyDown={() => onClickNoneColor()}
+        aria-hidden
+      >
+        <img src={noneIcon} alt="noneIcon" />
+      </div>
     </div>
   );
 }

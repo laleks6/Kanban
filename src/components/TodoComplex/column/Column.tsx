@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hook/hook";
 import {
@@ -127,8 +128,10 @@ function Column({ column, inedex, columns }: Props) {
             aria-hidden
           >
             <h4
-              style={{ backgroundColor: colorTitle }}
-              className={colorTitle ? style.changeFontColor : ""}
+              style={{
+                backgroundColor: colorTitle.bgColor,
+                color: colorTitle.textColor,
+              }}
             >
               {column?.name}
             </h4>
@@ -166,16 +169,17 @@ function Column({ column, inedex, columns }: Props) {
           </div>
         </div>
         <div className={style.mainBlokTasks}>
-          {tasks.map((el, i) => (
-            <Task
-              key={el.id}
-              data={el}
-              tasks={tasks}
-              taskIndex={i}
-              column={column}
-              columns={columns}
-            />
-          ))}
+          {tasks &&
+            tasks.map((el, i) => (
+              <Task
+                key={el.id}
+                data={el}
+                tasks={tasks}
+                taskIndex={i}
+                column={column}
+                columns={columns}
+              />
+            ))}
           <AddTask columnInedex={inedex} />
         </div>
       </div>
