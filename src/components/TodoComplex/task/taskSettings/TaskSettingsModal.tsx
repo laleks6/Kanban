@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 import style from "./style.module.scss";
 import { TypeTaskDataContext } from "../../../types/baseTypes";
@@ -23,6 +23,7 @@ function TaskSettingsModal({ taskIndex }: Props) {
     indexTask = taskIndex.indexTask;
   }
   const task = useAppSelector(
+    // eslint-disable-next-line prettier/prettier
     (state) => state.kanban.columns[indexColumn].tasks[indexTask]
   );
   const dispatch = useAppDispatch();
@@ -33,36 +34,25 @@ function TaskSettingsModal({ taskIndex }: Props) {
   const deleteDescriptionDispatch = (obj: Record<string, number>) =>
     dispatch(deleteDescriptionTask(obj));
   const changeDescriptionTaskDispatch = (
+    // eslint-disable-next-line prettier/prettier
     obj: Record<string, number | string>
   ) => dispatch(changeDescriptionTask(obj));
   const deleteTaskDispatch = (obj: Record<string, number>) =>
     dispatch(deleteTask(obj));
-  const [title, setTitile] = useState(true);
-  const [titleValue, setTitileValue] = useState(task.data);
+  // const [title, setTitile] = useState(true);
+  // const [titleValue, setTitileValue] = useState(task.data);
   const [descriptionValue, setDescriptionValue] = useState("");
-  const [description, setDescription] = useState(false);
+  // const [, setDescription] = useState(false);
   const tagsGlobal = useAppSelector((state) => state.globalTask.tags);
-  // const clickTitile = () => {
-  //   setTitile(!title);
-  // };
+
   const changeTitle = (e: ContentEditableEvent) => {
     const { value } = e.target;
     chengeTitleTaskDispatch({ indexColumn, indexTask, value });
-    // setTitileValue(e.target.value);
   };
-  // const clickChangeBtn = () => {
-  //   chengeTitleTaskDispatch({ indexColumn, indexTask, titleValue });
-  //   setTitile(true);
-  // };
-  // const clickCloseBtn = () => {
-  //   setTitile(true);
-  //   setTitileValue(task.data);
-  // };
-  const clickDescription = () => {
-    setDescription(true);
-  };
+
   const changeDescription = (
     e: ContentEditableEvent,
+    // eslint-disable-next-line prettier/prettier
     indexDescription: number
   ) => {
     const { value } = e.target;
@@ -81,7 +71,7 @@ function TaskSettingsModal({ taskIndex }: Props) {
       e.preventDefault();
       addDescriptionDispatch({ indexColumn, indexTask, descriptionValue });
       setDescriptionValue("");
-      e.target.innerText = "";
+      (e.target as HTMLElement).innerText = "";
     }
   };
   const deleteDescription = (indexDescription: number) => {
@@ -109,7 +99,7 @@ function TaskSettingsModal({ taskIndex }: Props) {
               <div key={el.id} className={style.description}>
                 <ContentEditable
                   data-two="two"
-                  html={el.data}
+                  html={`${el.data}`}
                   className={`${style.contentEditable}`}
                   onChange={(e) => changeDescription(e, i)}
                   aria-hidden
@@ -127,8 +117,9 @@ function TaskSettingsModal({ taskIndex }: Props) {
         </div>
         <div
           className={`${style.newDescription} `}
-          onInput={(e) => setDescriptionValue(e.target.innerText)}
-          onClick={(e) => clickDescription(e)}
+          onInput={(e) =>
+            setDescriptionValue((e.target as HTMLElement).innerText)
+          }
           onKeyDown={(e) => createDescription(e)}
           aria-hidden
           contentEditable="true"

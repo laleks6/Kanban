@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import style from "../style.module.scss";
 import { type TypeTag } from "../../../types/baseTypes";
 import { useAppSelector, useAppDispatch } from "../../../hook/hook";

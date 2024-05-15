@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import TodoSimple from "./components/ToDoSimple/TodoSimple";
 import Kanban from "./components/TodoComplex/Kanban";

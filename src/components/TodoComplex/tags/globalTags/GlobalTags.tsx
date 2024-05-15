@@ -1,4 +1,3 @@
-import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../hook/hook";
 import { ColumnTag, TypeTag } from "../../../types/baseTypes";
 import { addTaskTag, removeTag } from "../../../store/kanbanSlice";
@@ -7,9 +6,9 @@ import style from "./style.module.scss";
 type Props = Record<string, number>;
 function GLobalTags({ columnIndex, taskIndex }: Props) {
   const tagsGlobal = useAppSelector((state) => state.globalTask.tags);
-  const tagsTask = useAppSelector(
-    (state) => state.kanban.columns[columnIndex].tasks[taskIndex].tags
-  );
+  const tagsTask = useAppSelector((state) => {
+    return state.kanban.columns[columnIndex].tasks[taskIndex].tags;
+  });
   const dispatch = useAppDispatch();
   const dispatchAddColumnTag = (tag: ColumnTag) => dispatch(addTaskTag(tag));
   const dispatchRemoveColumnTag = (tag: Record<string, number>) =>

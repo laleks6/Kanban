@@ -1,4 +1,4 @@
-import React, { useState, useContext, Dispatch, SetStateAction } from "react";
+import { useState, useContext, Dispatch, SetStateAction } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hook/hook";
 import { removeTag, changeColorTag } from "../../../store/kanbanSlice";
 import {
@@ -26,9 +26,9 @@ function TagSettings({ targetTag, setTargetTag, settagSettings }: Props) {
   const columnIndex = useContext(ColumnIndexContext);
   const taskIndex = useContext(TaskIndexContext);
   const modalContext = useContext(ActiveModalContext);
-  const tagsTask = useAppSelector(
-    (state) => state.kanban.columns[columnIndex].tasks[taskIndex].tags
-  );
+  const tagsTask = useAppSelector((state) => {
+    return state.kanban.columns[columnIndex].tasks[taskIndex].tags;
+  });
   const tagsGlobal = useAppSelector((state) => state.globalTask.tags);
   const dispatch = useAppDispatch();
   const removeDispatch = (obj: Record<string, number>) =>
@@ -39,19 +39,19 @@ function TagSettings({ targetTag, setTargetTag, settagSettings }: Props) {
   const changeGlobalColorDispatch = (obj: Record<string, number | string>) =>
     dispatch(changeColorGlobalTag(obj));
 
-  const geteIndex = (arr, currentEl) => {
-    const tag = arr.find((el) => el.id === currentEl.id);
+  const geteIndex = (arr: TypeTag[], currentEl: TypeTag | null) => {
+    const tag = arr.find((el) => el.id === currentEl?.id);
     let index = -1;
     if (tag) index = arr.indexOf(tag);
     return index;
   };
 
-  const [bgColor, setBgColor] = useState(
-    tagsTask[geteIndex(tagsTask, targetTag)].bgColor
-  );
-  const [textColor, setTextColor] = useState(
-    tagsTask[geteIndex(tagsTask, targetTag)].textColor
-  );
+  const [bgColor, setBgColor] = useState(() => {
+    return tagsTask[geteIndex(tagsTask, targetTag)].bgColor;
+  });
+  const [textColor, setTextColor] = useState(() => {
+    return tagsTask[geteIndex(tagsTask, targetTag)].textColor;
+  });
 
   const onClickRemove = () => {
     const tagIndex = geteIndex(tagsTask, targetTag);
@@ -67,11 +67,6 @@ function TagSettings({ targetTag, setTargetTag, settagSettings }: Props) {
     setTargetTag(null);
     settagSettings(false);
     modalContext?.setModalActive(false);
-    console.log(
-      targetTag,
-      geteIndex(tagsTask, targetTag),
-      "TARGET INDEX DELETE"
-    );
   };
   const changeColor = () => {
     const tagTaskIndex = geteIndex(tagsTask, targetTag);

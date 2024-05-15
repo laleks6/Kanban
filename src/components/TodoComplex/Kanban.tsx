@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useMemo, useState } from "react";
 import { useAppSelector } from "../hook/hook";
 import style from "./complex.module.scss";
 import Column from "./column/Column";
@@ -15,16 +15,25 @@ function Kanban() {
   // const [tagSettings, settagSettings] = useState(false);
   // const [tagsAddSettings, setTagsAddSettings] = useState(false);
 
+  const modalActiveMemo = useMemo(
+    () => ({ modalActive, setModalActive }),
+    // eslint-disable-next-line prettier/prettier
+    [modalActive, setModalActive]
+  );
+
+  const taskSettingsMemo = useMemo(
+    () => ({ taskSettings, setTaskSettings, indices, setIndices }),
+    // eslint-disable-next-line prettier/prettier
+    [taskSettings, setTaskSettings, indices, setIndices]
+  );
   const onClickBlockout = () => {
     setModalActive(false);
     setTaskSettings(false);
     // setTagsAddSettings(false);
   };
   return (
-    <ActiveModalContext.Provider value={{ modalActive, setModalActive }}>
-      <TaskSettingsContext.Provider
-        value={{ taskSettings, setTaskSettings, indices, setIndices }}
-      >
+    <ActiveModalContext.Provider value={modalActiveMemo}>
+      <TaskSettingsContext.Provider value={taskSettingsMemo}>
         {modalActive && (
           <div
             className={style.blockout}

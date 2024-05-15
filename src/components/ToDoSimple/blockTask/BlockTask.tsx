@@ -1,4 +1,3 @@
-import React from "react";
 import { useAppDispatch } from "../../hook/hook";
 import { deleteTodo, toggleTodo } from "../../store/todoSlice";
 import { type TaskTodo } from "../../types/baseTypes";

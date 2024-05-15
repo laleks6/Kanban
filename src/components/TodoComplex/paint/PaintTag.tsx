@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import style from "./style.module.scss";
 import noneIcon from "../../../assets/none_icon.png";
 
