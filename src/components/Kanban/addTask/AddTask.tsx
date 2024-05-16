@@ -1,8 +1,8 @@
 import { useState } from "react";
+import ContentEditable from "react-contenteditable";
 import { useAppDispatch } from "../../hook/hook";
 import { addTask } from "../../store/kanbanSlice";
 import style from "./addTask.module.scss";
-import ContentEditable from "react-contenteditable";
 
 type Props = { columnInedex: number };
 function AddTask({ columnInedex }: Props) {
