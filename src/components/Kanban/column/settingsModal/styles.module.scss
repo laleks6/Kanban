@@ -19,6 +19,7 @@
 .colorsSetting {
   width: 100%;
 }
+
 .colorsSettingBlock {
   display: flex;
   justify-content: center;
@@ -32,9 +33,11 @@
   gap: 10px;
   padding: 0 10px;
 }
+
 .noneColorsIcon {
   width: 17px;
 }
+
 .colorIcon {
   display: block;
   width: 17px;
@@ -48,6 +51,7 @@
   right: -5px;
   z-index: 6;
 }
+
 .deleteSetting {
   display: flex;
   align-items: center;
