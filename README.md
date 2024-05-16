@@ -3,7 +3,7 @@
  
 Link project - https://laleks6.github.io/To-do/
 
-## Tasl stack
+## Task stack
 
 
 <p align="left">
