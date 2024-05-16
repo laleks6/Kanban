@@ -1,9 +1,9 @@
- #To-do / Kanban
+ # To-do / Kanban
  ==============
  
 Link project - https://laleks6.github.io/To-do/
 
-### Tasl stack
+## Tasl stack
 ==============
 
 <p align="left">
