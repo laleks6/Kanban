@@ -29,7 +29,7 @@ _Below is an example of how to install and configure the application._
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/KateGoncharik/eCommerce-Application.git
+   git clone https://github.com/laleks6/To-do.git
    ```
 2. Install NPM packages
    ```sh
@@ -37,5 +37,5 @@ _Below is an example of how to install and configure the application._
    ```
 3. Start project
    ```sh
-   npm run start
+   npm run dev
    ```
