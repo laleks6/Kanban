@@ -1,19 +1,20 @@
 .addTask {
   display: flex;
   flex-direction: column;
-  height: 60px;
+  justify-content: space-between;
+  min-height: 60px;
   width: 100%;
   border: 2px solid #a7a7a7;
   background-color: #ddd4e1;
+  font-size: 1rem;
   color: black;
   transition: all 0.3s ease;
-  textarea {
-    height: 70%;
+  .content {
     border: none;
     outline: none;
     resize: none;
-    overflow: hidden;
     background-color: transparent;
+    padding: 5px;
   }
 }
 .activeAddTask {
@@ -24,11 +25,18 @@
   display: flex;
   justify-content: end;
   padding: 5px;
-  gap: 10px;
+  gap: 5px;
 }
 .button {
+  padding: 5px;
   background-color: transparent;
   border: none;
+  border-radius: 5px;
+  font-size: 1rem;
   color: #a59f9f;
   cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #d8d5d5;
+  }
 }

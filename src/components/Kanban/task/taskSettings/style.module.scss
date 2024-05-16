@@ -49,10 +49,8 @@
   background-color: #ededed;
   border-radius: 5px;
   padding: 5px;
+  font-size: 0.8rem;
   cursor: pointer;
-  // &:focus {
-  //   background-color: transparent;
-  // }
 }
 [data-placeholder]:empty:before {
   content: attr(data-placeholder);
@@ -83,6 +81,7 @@
   justify-content: space-between;
   gap: 5px;
   border-bottom: 1px solid #d6d6d6;
+  font-size: 0.8rem;
   &:hover .deleteDescriptionBtn {
     opacity: 1;
   }

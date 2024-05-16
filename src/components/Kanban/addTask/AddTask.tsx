@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAppDispatch } from "../../hook/hook";
 import { addTask } from "../../store/kanbanSlice";
 import style from "./addTask.module.scss";
+import ContentEditable from "react-contenteditable";
 
 type Props = { columnInedex: number };
 function AddTask({ columnInedex }: Props) {
@@ -31,16 +32,16 @@ function AddTask({ columnInedex }: Props) {
       onKeyDown={clickNewTask}
       aria-hidden
     >
-      <textarea
-        className={style.textarea}
+      <ContentEditable
+        className={style.content}
         onChange={(e) => setvalue(e.target.value)}
-        value={value}
-        placeholder="New task"
+        html={`${value}`}
+        data-placeholder="New task"
       />
       {status && (
         <div className={style.blockBtn}>
           <button type="button" className={style.button} onClick={clickAddBtn}>
-            add+
+            add
           </button>
           <button
             type="button"

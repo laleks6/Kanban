@@ -2,7 +2,7 @@ import { useAppDispatch } from "../../hook/hook";
 import { deleteTodo, toggleTodo } from "../../store/todoSlice";
 import { type TaskTodo } from "../../types/baseTypes";
 import style from "./Task.module.scss";
-import binImg from "../../../assets/bin_icon.png";
+import binImg from "../../../assets/recycle-bin.png";
 import checkBOx from "../../../assets/check-mark-green.png";
 
 type Props = {
@@ -19,9 +19,9 @@ function BlockTask({ tasks }: Props) {
           key={el.id}
           id={`e${el.id}`}
         >
-          <label className={style.labelCheckbox} htmlFor={`e${el.id}`}>
+          <label className={style.labelCheckbox} htmlFor={`${el.id}`}>
             <input
-              id={`e${el.id}`}
+              id={`${el.id}`}
               className={style.checbox}
               type="checkbox"
               onClick={() => dispatch(toggleTodo(el.id))}

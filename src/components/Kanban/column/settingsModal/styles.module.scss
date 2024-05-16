@@ -2,10 +2,11 @@
   position: absolute;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 200px;
   top: 0px;
   right: -5px;
-  gap: 10px;
+  gap: 5px;
   padding: 5px;
   border-radius: 5px;
   background-color: #d6d6d6;
@@ -54,11 +55,12 @@
 
 .deleteSetting {
   display: flex;
-  align-items: center;
+  align-items: start;
   gap: 8px;
   padding: 0 10px;
   transition: all 0.3s ease;
   border-radius: 2px;
+  font-size: 1.1rem;
   cursor: pointer;
   &:hover {
     background-color: #ca0d0d6b;
@@ -66,6 +68,8 @@
   img {
     width: 20px;
     height: auto;
+  }
+  span {
   }
 }
 

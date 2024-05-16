@@ -28,8 +28,8 @@ function Tags({ data, tagsAddModal, setTagsAddModal }: Props) {
   console.log(data, "RENDERING TAGS BLOCK");
   const [value, setValue] = useState("");
   const [tagPaint, setTagPaint] = useState(false);
-  const [bgColor, setBgColor] = useState("#6a6a6a");
-  const [textColor, setTextColor] = useState("#c5c5c5");
+  const [bgColor, setBgColor] = useState("");
+  const [textColor, setTextColor] = useState("");
   const [targetTag, setTargetTag] = useState<TypeTag | null>(null);
   const [tagSettings, settagSettings] = useState(false);
   const [tagsAddSettings, setTagsAddSettings] = useState(false);
@@ -43,8 +43,8 @@ function Tags({ data, tagsAddModal, setTagsAddModal }: Props) {
     setTagsAddModal(!tagsAddModal);
     setTagPaint(false);
     setValue("");
-    setBgColor("#6a6a6a");
-    setTextColor("#c5c5c5");
+    setBgColor("");
+    setTextColor("");
     modalContext?.setModalActive(true);
     setTagsAddSettings(true);
   };

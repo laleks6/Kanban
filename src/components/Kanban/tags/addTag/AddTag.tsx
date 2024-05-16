@@ -39,16 +39,14 @@ function AddTag({
   const dispatch = useAppDispatch();
   const dispatchAddGlobalTag = (tag: TypeTag) => dispatch(addGlobalTag(tag));
   const dispatchAddColumnTag = (tag: ColumnTag) => dispatch(addTaskTag(tag));
-  // const dispatchRemoveColumnTag = (tag: ColumnTag) => dispatch(removeTag(tag));
+
   const columnIndex = useContext(ColumnIndexContext);
   const taskIndex = useContext(TaskIndexContext);
   const modalContext = useContext(ActiveModalContext);
   const tagsGlobal = useAppSelector((state) => state.globalTask.tags);
-  // const tagsTask = useAppSelector(
-  //   (state) => state.kanban.columns[columnIndex].tasks[taskIndex].tags
-  // );
   const filterTagGlobal = tagsGlobal.filter((el) => el.value === value);
   const idTag = Date.now();
+
   const creteObjTask = () => {
     return { id: idTag, value, bgColor, textColor };
   };
@@ -66,8 +64,8 @@ function AddTag({
         });
         setTagsAddSettings(false);
         setValue("");
-        setBgColor("#6a6a6a");
-        setTextColor("#c5c5c5");
+        setBgColor("");
+        setTextColor("");
         modalContext?.setModalActive(false);
       }
     }
@@ -82,8 +80,8 @@ function AddTag({
     });
     setTagsAddSettings(false);
     setValue("");
-    setBgColor("#6a6a6a");
-    setTextColor("#c5c5c5");
+    setBgColor("");
+    setTextColor("");
     modalContext?.setModalActive(false);
   };
 
