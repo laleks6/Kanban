@@ -8,7 +8,9 @@ import store from "./components/store/index.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter
+      basename={process.env.NODE_ENV === "production" ? "/Kanban/" : "/"}
+    >
       <Provider store={store}>
         <App />
       </Provider>
