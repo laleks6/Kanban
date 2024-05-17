@@ -1,4 +1,4 @@
- # To-do / Kanban
+ # Kanban
 
 ## Link project 
 https://laleks6.github.io/To-do/
