@@ -2,7 +2,7 @@
 
 ## Link project 
 
-### https://laleks6.github.io/To-do/
+### https://laleks6.github.io/Kanban/
 
 ## Task stack
 
