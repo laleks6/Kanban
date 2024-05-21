@@ -17,6 +17,10 @@
 <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/62091613/261395532-b40892ef-efb8-4b0e-a6b5-d1cfc2f3fc35.png" width="36" height="36" title="Vite" />
 <img src="https://user-images.githubusercontent.com/25181517/121401671-49102800-c959-11eb-9f6f-74d49a5e1774.png" width="36" height="36" title="npm" />
 </p>
+##Screenshot:
+
+![kanban_1](https://github.com/laleks6/Kanban/assets/96025122/cb6ccdd8-0886-49c5-9e9e-4bdc3418cd51)
+![todo](https://github.com/laleks6/Kanban/assets/96025122/71683f61-26af-487a-822f-6c2d683a660c)
 
 ## Getting Started
 
