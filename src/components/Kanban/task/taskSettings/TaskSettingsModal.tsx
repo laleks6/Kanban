@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
 import style from "./style.module.scss";
 import { TypeTaskDataContext } from "../../../types/baseTypes";
@@ -12,10 +12,15 @@ import {
 } from "../../../store/kanbanSlice";
 import GLobalTags from "../../tags/globalTags/GlobalTags";
 import iconDelete from "../../../../assets/recycle-bin.png";
+import {
+  ActiveModalContext,
+  TaskSettingsContext,
+} from "../../../context/Context";
 
 type Props = { taskIndex: TypeTaskDataContext | null };
 function TaskSettingsModal({ taskIndex }: Props) {
-  // const [targetTag];
+  const taskSettingsContext = useContext(TaskSettingsContext);
+  const modalContext = useContext(ActiveModalContext);
   let indexColumn = -1;
   let indexTask = -1;
   if (taskIndex) {
@@ -34,15 +39,11 @@ function TaskSettingsModal({ taskIndex }: Props) {
   const deleteDescriptionDispatch = (obj: Record<string, number>) =>
     dispatch(deleteDescriptionTask(obj));
   const changeDescriptionTaskDispatch = (
-    // eslint-disable-next-line prettier/prettier
     obj: Record<string, number | string>
   ) => dispatch(changeDescriptionTask(obj));
   const deleteTaskDispatch = (obj: Record<string, number>) =>
     dispatch(deleteTask(obj));
-  // const [title, setTitile] = useState(true);
-  // const [titleValue, setTitileValue] = useState(task.data);
   const [descriptionValue, setDescriptionValue] = useState("");
-  // const [, setDescription] = useState(false);
   const tagsGlobal = useAppSelector((state) => state.globalTask.tags);
 
   const changeTitle = (e: ContentEditableEvent) => {
@@ -63,7 +64,6 @@ function TaskSettingsModal({ taskIndex }: Props) {
       indexDescription,
       value,
     });
-    // setDescriptionValue(e.target.innerText);
   };
   const createDescription = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter") {
@@ -79,6 +79,9 @@ function TaskSettingsModal({ taskIndex }: Props) {
   };
   const clickDeleteTaskBtn = () => {
     deleteTaskDispatch({ indexColumn, indexTask });
+    taskSettingsContext?.setTaskSettings(false);
+    modalContext?.setModalActive(false);
+    taskSettingsContext?.indices;
   };
   console.log("description", task);
   return (

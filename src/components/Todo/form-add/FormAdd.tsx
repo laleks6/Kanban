@@ -11,7 +11,8 @@ function FormAdd() {
   const dispatch = useAppDispatch();
   const validMax = "you have reached the 70 character limit";
   const validMin = "Insufficient number of characters";
-  const onClick = () => {
+
+  function addValue() {
     if (value.length === 0) {
       setTextValid(validMin);
       setValidClass(false);
@@ -20,7 +21,16 @@ function FormAdd() {
       setValue("");
       setValidClass(true);
     }
+  }
+
+  const onClick = () => {
+    addValue();
   };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") addValue();
+  };
+
   const oneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length >= 70) {
       setValidClass(false);
@@ -39,6 +49,7 @@ function FormAdd() {
         className={`${style.inputAdd} ${!validClass && style.valid}`}
         maxLength={70}
         onChange={(e) => oneChange(e)}
+        onKeyDown={(e) => onKeyDown(e)}
         value={value}
       />
       <button type="button" className={style.button} onClick={() => onClick()}>

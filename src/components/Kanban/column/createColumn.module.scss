@@ -58,9 +58,11 @@
 }
 .createBtn {
   display: flex;
+  align-items: center;
   gap: 5px;
   button {
-    padding: 5px;
+    padding: 7px;
+    height: fit-content;
     color: white;
     border: none;
     border-radius: 3px;

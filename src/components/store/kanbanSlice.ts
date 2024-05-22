@@ -65,6 +65,7 @@ const kanbanSlice = createSlice({
     },
     deleteTask(state, action) {
       console.log("Delete", action.payload);
+      //   state.columns.splice(action.payload, 1);
       const { indexColumn, indexTask } = action.payload;
       state.columns[indexColumn].tasks.splice(indexTask, 1);
     },
