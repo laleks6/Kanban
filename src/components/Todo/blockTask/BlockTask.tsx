@@ -5,15 +5,14 @@ import style from "./Task.module.scss";
 import binImg from "../../../assets/recycle-bin.png";
 import checkBOx from "../../../assets/check-mark-green.png";
 
-type Props = {
-  tasks: TaskTodo[];
-};
-function BlockTask({ tasks }: Props) {
+type Props = { arr: TaskTodo[] };
+function BlockTask({ arr }: Props) {
   const dispatch = useAppDispatch();
-  console.log(tasks, "task");
+
+  console.log(arr, "task");
   return (
     <div className={style.taskBlock}>
-      {tasks.map((el) => (
+      {arr.map((el) => (
         <div
           className={` ${style.task} ${!el.status && style.done} `}
           key={el.id}
@@ -24,6 +23,7 @@ function BlockTask({ tasks }: Props) {
               id={`${el.id}`}
               className={style.checbox}
               type="checkbox"
+              checked={!el.status}
               onClick={() => dispatch(toggleTodo(el.id))}
             />
             <span className={style.newChecbox}>

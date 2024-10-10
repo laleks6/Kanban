@@ -8,6 +8,12 @@ $small: 600px;
   width: 500px;
   background-color: white;
 }
+
+@media screen and (max-width: 500px) {
+  .taskBlock {
+    width: 100%;
+  }
+}
 .task {
   display: flex;
   align-items: center;

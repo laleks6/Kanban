@@ -1,12 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { TaskTodo } from "../types/baseTypes";
 /* eslint-disable no-param-reassign */
-type Todo = {
-  id: number;
-  discription: string;
-  status: boolean;
-};
+
 type TodosState = {
-  todos: Todo[];
+  todos: TaskTodo[];
 };
 const initialState: TodosState = {
   todos: [],
@@ -27,6 +24,9 @@ const todoSlice = createSlice({
       console.log(action.payload, "delete");
       state.todos = state.todos.filter((el) => el.id !== action.payload);
     },
+    deleteCompletedTodos(state) {
+      state.todos = state.todos.filter((el) => el.status);
+    },
     toggleTodo(state, action) {
       console.log(action.payload, "toggle");
       const task = state.todos.find((el) => el.id === action.payload);
@@ -35,5 +35,6 @@ const todoSlice = createSlice({
   },
 });
 
-export const { addTodo, deleteTodo, toggleTodo } = todoSlice.actions;
+export const { addTodo, deleteTodo, deleteCompletedTodos, toggleTodo } =
+  todoSlice.actions;
 export default todoSlice.reducer;
