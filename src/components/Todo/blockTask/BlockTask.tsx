@@ -8,8 +8,6 @@ import checkBOx from "../../../assets/check-mark-green.png";
 type Props = { arr: TaskTodo[] };
 function BlockTask({ arr }: Props) {
   const dispatch = useAppDispatch();
-
-  console.log(arr, "task");
   return (
     <div className={style.taskBlock}>
       {arr.map((el) => (
