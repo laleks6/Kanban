@@ -39,3 +39,7 @@ _Below is an example of how to install and configure the application._
    ```sh
    npm install
    ```
+3. Start project
+   ```sh
+   npm run start
+   ```
