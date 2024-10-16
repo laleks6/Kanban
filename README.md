@@ -19,8 +19,10 @@
 </p>
 ##Screenshot:
 
-![kanban_1](https://github.com/laleks6/Kanban/assets/96025122/cb6ccdd8-0886-49c5-9e9e-4bdc3418cd51)
-![todo](https://github.com/laleks6/Kanban/assets/96025122/71683f61-26af-487a-822f-6c2d683a660c)
+![kanban](https://github.com/laleks6/Kanban/assets/96025122/cb6ccdd8-0886-49c5-9e9e-4bdc3418cd51)
+![todo#1](https://github.com/user-attachments/assets/a3274cb4-509a-46df-930f-c3063c48e84f)
+![todo#2](https://github.com/user-attachments/assets/7bd19fbe-deb9-464b-9700-33105fc4f801)
+
 
 ## Getting Started
 
