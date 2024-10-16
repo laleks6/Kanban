@@ -19,7 +19,7 @@
 </p>
 ##Screenshot:
 
-![kanban](https://github.com/user-attachments/assets/4d26b106-f68f-4877-bc3d-ccc3a87d9780)
+![kanban](https://github.com/laleks6/Kanban/assets/96025122/cb6ccdd8-0886-49c5-9e9e-4bdc3418cd51)
 ![todo#1](https://github.com/user-attachments/assets/b08fee01-eac0-4eab-99e1-1f04959dbffe)
 ![todo#2](https://github.com/user-attachments/assets/afeb2844-2075-4454-9c7b-bde2b932d9a6)
 
