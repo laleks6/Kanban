@@ -39,6 +39,7 @@ function BlockTask({ arr }: Props) {
             type="button"
             className={style.button}
             onClick={() => dispatch(deleteTodo(el.id))}
+            aria-label="delete-todo"
           >
             <img src={binImg} alt="bin" />
           </button>

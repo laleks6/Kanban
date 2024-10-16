@@ -24,7 +24,7 @@ function Todo() {
   return (
     <article className={style.blockSimple}>
       <FormAdd />
-      {arrTasks.length > 0 && <BlockTask arr={arr} />}
+      {arrTasks.length ? <BlockTask arr={arr} /> : <h3>No todo</h3>}
       <TaskManagement
         stateTask={stateTask}
         HandleChangeStateTask={HandleChangeStateTask}

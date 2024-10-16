@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { TaskTodo } from "../types/baseTypes";
 /* eslint-disable no-param-reassign */
 
-type TodosState = {
+export type TodosState = {
   todos: TaskTodo[];
 };
 const initialState: TodosState = {

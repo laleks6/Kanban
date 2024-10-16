@@ -51,8 +51,14 @@ function FormAdd() {
         onChange={(e) => oneChange(e)}
         onKeyDown={(e) => onKeyDown(e)}
         value={value}
+        placeholder="todo"
       />
-      <button type="button" className={style.button} onClick={() => onClick()}>
+      <button
+        type="button"
+        className={style.button}
+        onClick={() => onClick()}
+        aria-label="add-todo"
+      >
         <img src={iconAdd} alt="iconAdd" />
       </button>
       {!validClass && <span className={style.textValidation}>{textValid}</span>}
