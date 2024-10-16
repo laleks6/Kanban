@@ -19,8 +19,11 @@
 </p>
 ##Screenshot:
 
-![kanban_1](https://github.com/laleks6/Kanban/assets/96025122/cb6ccdd8-0886-49c5-9e9e-4bdc3418cd51)
-![todo](https://github.com/laleks6/Kanban/assets/96025122/71683f61-26af-487a-822f-6c2d683a660c)
+![kanban](https://github.com/laleks6/Kanban/assets/96025122/cb6ccdd8-0886-49c5-9e9e-4bdc3418cd51)
+![todo#1](https://github.com/user-attachments/assets/b08fee01-eac0-4eab-99e1-1f04959dbffe)
+![todo#2](https://github.com/user-attachments/assets/afeb2844-2075-4454-9c7b-bde2b932d9a6)
+
+
 
 ## Getting Started
 
@@ -41,5 +44,6 @@ _Below is an example of how to install and configure the application._
    ```
 3. Start project
    ```sh
-   npm run dev
+   npm run start
    ```
+
